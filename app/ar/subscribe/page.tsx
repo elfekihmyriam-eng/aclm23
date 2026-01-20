@@ -69,12 +69,12 @@ export default function SubscribePage() {
                     : "PLAN_ANNUEL_ID_ICI",
               });
             }}
-           onApprove={(data) => {
+onApprove={(data, actions) => {
   return Promise.resolve().then(() => {
-    alert("تم تفعيل الاشتراك بنجاح ✅");
-    console.log("Subscription ID:", data.subscriptionID);
+    console.log("OK", data);
   });
 }}
+
 
             onError={(err) => {
               console.error("PayPal error:", err);

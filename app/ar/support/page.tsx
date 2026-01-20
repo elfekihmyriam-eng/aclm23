@@ -95,11 +95,12 @@ export default function SupportPage() {
                     ],
                   });
                 }}
-                onApprove={(data, actions) => {
-                  return actions.order.capture().then(() => {
-                    alert("شكرًا جزيلًا لدعمكم 🙏");
-                  });
-                }}
+               onApprove={(data, actions) => {
+  return Promise.resolve().then(() => {
+    console.log("OK", data);
+  });
+}}
+
                 onError={(err) => {
                   console.error("PayPal error:", err);
                   alert("حدث خطأ أثناء عملية الدفع. يرجى المحاولة مرة أخرى.");
