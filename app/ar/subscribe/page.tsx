@@ -72,7 +72,7 @@ export default function SubscribePage() {
 onApprove={async (data) => {
   alert("تم تفعيل الاشتراك بنجاح ✅");
   console.log("Subscription ID:", data.subscriptionID);
-}}
+} as any}
 
 
 
