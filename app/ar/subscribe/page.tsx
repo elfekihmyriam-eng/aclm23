@@ -69,10 +69,10 @@ export default function SubscribePage() {
                     : "PLAN_ANNUEL_ID_ICI",
               });
             }}
-onApprove={async (data) => {
+onApprove={((data: any) => {
   alert("تم تفعيل الاشتراك بنجاح ✅");
   console.log("Subscription ID:", data.subscriptionID);
-} as any}
+}) as any}
 
 
 
