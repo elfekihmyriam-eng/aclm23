@@ -1,26 +1,1104 @@
-@import "tailwindcss";
+/* =========================================================
+   RESET GLOBAL
+========================================================= */
+* { box-sizing: border-box; }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #ffffff;
+}
+
+/* =========================================================
+   HEADER FIXE — NOIR
+========================================================= */
+.header-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #000;
+  z-index: 1000;
+}
+
+.nav-fixed {
+  max-width: 1400px;
+  margin: auto;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  direction: rtl;
+}
+
+.nav-links,
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-links a,
+.nav-actions a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-btn {
+  border: 1px solid white;
+  padding: 8px 22px;
+  border-radius: 24px;
+  line-height: 1;
+}
+
+/* =========================================================
+   HERO — PAGE 1 (IMAGE FIXE)
+========================================================= */
+.hero-page {
+  position: sticky;          /* 🔑 ESSENTIEL */
+  top: 0;
+  height: 100vh;
+  padding-top: 90px;         /* espace menu */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.heroImage {
+  max-width: 1200px;
+  width: 100%;
+  margin-top: -40px;
+}
+
+/* =========================================================
+   TITRE + CTA SUR IMAGE (FIXES)
+========================================================= */
+.hero-overlay {
+  position: fixed;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.hero-title {
+  color: #000000;
+  font-size: 48px;
+  margin-bottom: 36px;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: #b89b7a;
+  color: white;
+  padding: 14px 40px;
+  border-radius: 30px;
+  text-decoration: none;
+}
+
+/* =========================================================
+   BLOCS TRANSLUCIDES — PAGES 2+
+========================================================= */
+.content-page {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 180px auto;
+  padding: 96px 48px;
+
+  /* 🔑 TRANSLUCENCE RESTAURÉE */
+  background: rgba(130, 130, 130, 0.45);
+  backdrop-filter: blur(6px);
+
+  border-radius: 28px;
+  text-align: center;
+  color: white;
+}
+
+/* =========================================================
+   TEXTE
+========================================================= */
+.content-text {
+  font-size: 20px;
+  line-height: 2.1;
+  max-width: 820px;
+  margin: auto;
+}
+
+/* =========================================================
+   LISTES (أنشطة / المنتدى)
+========================================================= */
+.activities-list {
+  text-align: right;
+  max-width: 900px;
+  margin: auto;
+}
+
+.activities-list li {
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   LIVRES
+========================================================= */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap: 30px;
+}
+
+.book-item img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* =========================================================
+   AUTEURS
+========================================================= */
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 40px;
+}
+
+.author-card img {
+  width: 180px;
+  border-radius: 50%;
+}
+
+/* =========================================================
+   FOOTER — NOIR
+========================================================= */
+.footer {
+  background: #000;
+  color: white;
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* =========================================================
+   RESTAURATION PAGE الاشتراك (ABONNEMENT)
+========================================================= */
+
+.subscribe-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 200px 32px 220px;
+  text-align: center;
+}
+
+.subscribe-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+  color: #3f2a1d;
+}
+
+.subscribe-intro {
+  font-size: 20px;
+  line-height: 2;
+  max-width: 720px;
+  margin: 0 auto 90px;
+  color: #5b3d2a;
+}
+
+/* FORMULAIRE */
+.subscribe-form {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+/* LIGNES */
+.subscribe-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+
+/* INPUTS */
+.subscribe-form input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d6c3b0;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+/* =====================
+   CARTES ABONNEMENT
+===================== */
+
+.plans-section {
+  margin: 100px 0 120px;
+}
+
+.plans-title {
+  font-size: 32px;
+  margin-bottom: 48px;
+  color: #3f2a1d;
+}
+
+.plans {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.plan {
+  width: 300px;
+  padding: 40px 28px;
+  border-radius: 22px;
+  border: 2px solid #e7dccf;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.plan:hover {
+  transform: translateY(-8px);
+}
+
+.plan input {
+  display: none;
+}
+
+.plan strong {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 14px;
+  color: #3f2a1d;
+}
+
+.plan span {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3f2a1d;
+}
+
+.plan.active {
+  background: #f7f2ec;
+  border-color: #b89b7a;
+}
+
+/* =====================
+   PAIEMENT
+===================== */
+
+.payment-box {
+  margin-top: 120px;
+}
+
+.payment-note {
+  font-size: 18px;
+  margin-bottom: 36px;
+  color: #5b3d2a;
+}
+
+.paypal-btn {
+  padding: 20px 60px;
+  font-size: 18px;
+  border-radius: 44px;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.paypal-btn:hover {
+  opacity: 0.85;
+}
+
+/* =========================================================
+   RESTAURATION PAGE دعم (DON)
+========================================================= */
+
+.support-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 200px 32px 240px;
+  text-align: center;
+}
+
+.support-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+  color: #3f2a1d;
+}
+
+.support-intro {
+  font-size: 20px;
+  line-height: 2;
+  max-width: 760px;
+  margin: 0 auto 100px;
+  color: #5b3d2a;
+}
+
+/* FORMULAIRE */
+.support-form {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+/* LIGNES */
+.support-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+
+.support-form .form-row.single {
+  grid-template-columns: 1fr;
+}
+
+/* INPUTS */
+.support-form input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d6c3b0;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+/* =====================
+   MONTANTS
+===================== */
+
+.amount-section {
+  margin: 120px 0;
+}
+
+.amount-title {
+  font-size: 32px;
+  margin-bottom: 48px;
+  color: #3f2a1d;
+}
+
+.amount-options {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.amount-btn {
+  padding: 16px 34px;
+  font-size: 18px;
+  border-radius: 32px;
+  border: 2px solid #e7dccf;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.amount-btn.active {
+  background: #b89b7a;
+  color: #ffffff;
+  border-color: #b89b7a;
+}
+
+.custom-amount {
+  width: 280px;
+  padding: 16px 18px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d6c3b0;
+  text-align: center;
+}
+.back-link {
+  text-align: right;
+  margin-bottom: 60px;
+}
+
+.back-link a {
+  font-size: 15px;
+  color: #8b6f5a;
+  text-decoration: none;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+/* =========================================================
+   CENTRAGE DU BLOC PAIEMENT — اشتراك + دعم
+========================================================= */
+
+.payment-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* centre horizontalement */
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.payment-note {
+  max-width: 700px;
+  margin: 0 auto 36px;     /* centre le texte */
+  font-size: 18px;
+  line-height: 2;
+}
+
+/* Bouton PayPal centré */
+.paypal-btn {
+  margin: 0 auto;          /* centre le bouton */
+}
+/* =========================================================
+   FOOTER — FINAL (NOIR / BLANC)
+========================================================= */
+
+.footer {
+  position: relative;
+  z-index: 100;
+  background: #000000;
+  color: #ffffff;
+  text-align: center;
+  padding: 70px 0 80px;
+}
+
+.footer p {
+  margin: 6px 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+/* =========================================================
+   RESET GLOBAL
+========================================================= */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #ffffff;
+}
+
+/* =========================================================
+   HEADER FIXE — NOIR
+========================================================= */
+.header-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #000;
+  z-index: 1000;
+}
+
+.nav-fixed {
+  max-width: 1400px;
+  margin: auto;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  direction: rtl;
+}
+
+.nav-links,
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-links a,
+.nav-actions a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-btn {
+  border: 1px solid white;
+  padding: 8px 22px;
+  border-radius: 24px;
+  line-height: 1;
+}
+
+/* =========================================================
+   HERO — PAGE 1 (IMAGE FIXE)
+========================================================= */
+.hero-page {
+  position: sticky;          /* 🔑 ESSENTIEL */
+  top: 0;
+  height: 100vh;
+  padding-top: 90px;         /* espace menu */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.heroImage {
+  max-width: 1200px;
+  width: 100%;
+  margin-top: -40px;
+}
+
+/* =========================================================
+   TITRE + CTA SUR IMAGE (FIXES)
+========================================================= */
+.hero-overlay {
+  position: fixed;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.hero-title {
+  color: #000000;
+  font-size: 48px;
+  margin-bottom: 36px;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: #b89b7a;
+  color: white;
+  padding: 14px 40px;
+  border-radius: 30px;
+  text-decoration: none;
+}
+
+/* =========================================================
+   BLOCS TRANSLUCIDES — PAGES 2+
+========================================================= */
+.content-page {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 180px auto;
+  padding: 96px 48px;
+
+  /* 🔑 TRANSLUCENCE RESTAURÉE */
+  background: rgba(130, 130, 130, 0.45);
+  backdrop-filter: blur(6px);
+
+  border-radius: 28px;
+  text-align: center;
+  color: white;
+}
+
+/* =========================================================
+   TEXTE
+========================================================= */
+.content-text {
+  font-size: 20px;
+  line-height: 2.1;
+  max-width: 820px;
+  margin: auto;
+}
+
+/* =========================================================
+   LISTES (أنشطة / المنتدى)
+========================================================= */
+.activities-list {
+  text-align: right;
+  max-width: 900px;
+  margin: auto;
+}
+
+.activities-list li {
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   LIVRES
+========================================================= */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap: 30px;
+}
+
+.book-item img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* =========================================================
+   AUTEURS
+========================================================= */
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 40px;
+}
+
+.author-card img {
+  width: 180px;
+  border-radius: 50%;
+}
+
+/* =========================================================
+   FOOTER — NOIR
+========================================================= */
+.footer {
+  background: #000;
+  color: white;
+  text-align: center;
+  padding: 60px 0;
+}
+
+/* =========================================================
+   RESTAURATION PAGE الاشتراك (ABONNEMENT)
+========================================================= */
+
+.subscribe-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 200px 32px 220px;
+  text-align: center;
+}
+
+.subscribe-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+  color: #3f2a1d;
+}
+
+.subscribe-intro {
+  font-size: 20px;
+  line-height: 2;
+  max-width: 720px;
+  margin: 0 auto 90px;
+  color: #5b3d2a;
+}
+
+/* FORMULAIRE */
+.subscribe-form {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+/* LIGNES */
+.subscribe-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+
+/* INPUTS */
+.subscribe-form input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d6c3b0;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+/* =====================
+   CARTES ABONNEMENT
+===================== */
+
+.plans-section {
+  margin: 100px 0 120px;
+}
+
+.plans-title {
+  font-size: 32px;
+  margin-bottom: 48px;
+  color: #3f2a1d;
+}
+
+.plans {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.plan {
+  width: 300px;
+  padding: 40px 28px;
+  border-radius: 22px;
+  border: 2px solid #e7dccf;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.plan:hover {
+  transform: translateY(-8px);
+}
+
+.plan input {
+  display: none;
+}
+
+.plan strong {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 14px;
+  color: #3f2a1d;
+}
+
+.plan span {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3f2a1d;
+}
+
+.plan.active {
+  background: #f7f2ec;
+  border-color: #b89b7a;
+}
+
+/* =====================
+   PAIEMENT
+===================== */
+
+.payment-box {
+  margin-top: 120px;
+}
+
+.payment-note {
+  font-size: 18px;
+  margin-bottom: 36px;
+  color: #5b3d2a;
+}
+
+.paypal-btn {
+  padding: 20px 60px;
+  font-size: 18px;
+  border-radius: 44px;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.paypal-btn:hover {
+  opacity: 0.85;
+}
+
+/* =========================================================
+   RESTAURATION PAGE دعم (DON)
+========================================================= */
+
+.support-page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 200px 32px 240px;
+  text-align: center;
+}
+
+.support-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+  color: #3f2a1d;
+}
+
+.support-intro {
+  font-size: 20px;
+  line-height: 2;
+  max-width: 760px;
+  margin: 0 auto 100px;
+  color: #5b3d2a;
+}
+
+/* FORMULAIRE */
+.support-form {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+/* LIGNES */
+.support-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+
+.support-form .form-row.single {
+  grid-template-columns: 1fr;
+}
+
+/* INPUTS */
+.support-form input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d6c3b0;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+/* =====================
+   MONTANTS
+===================== */
+
+.amount-section {
+  margin: 120px 0;
+}
+
+.amount-title {
+  font-size: 32px;
+  margin-bottom: 48px;
+  color: #3f2a1d;
+}
+
+.amount-options {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.amount-btn {
+  padding: 16px 34px;
+  font-size: 18px;
+  border-radius: 32px;
+  border: 2px solid #e7dccf;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.amount-btn.active {
+  background: #b89b7a;
+  color: #ffffff;
+  border-color: #b89b7a;
+}
+
+.custom-amount {
+  width: 280px;
+  padding: 16px 18px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d6c3b0;
+  text-align: center;
+}
+.back-link {
+  text-align: right;
+  margin-bottom: 60px;
+}
+
+.back-link a {
+  font-size: 15px;
+  color: #8b6f5a;
+  text-decoration: none;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+/* =========================================================
+   CENTRAGE DU BLOC PAIEMENT — اشتراك + دعم
+========================================================= */
+
+.payment-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* centre horizontalement */
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.payment-note {
+  max-width: 700px;
+  margin: 0 auto 36px;     /* centre le texte */
+  font-size: 18px;
+  line-height: 2;
+}
+
+/* Bouton PayPal centré */
+.paypal-btn {
+  margin: 0 auto;          /* centre le bouton */
+}
+/* =========================================================
+   FOOTER — FINAL (NOIR / BLANC)
+========================================================= */
+
+.footer {
+  position: relative;
+  z-index: 100;
+  background: #000000;
+  color: #ffffff;
+  text-align: center;
+  padding: 70px 0 80px;
+}
+
+.footer p {
+  margin: 6px 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* =========================================================
+   FORMULAIRE استمارة الكاتب — DESIGN FINAL
+========================================================= */
+
+.authors-form {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.authors-form-box {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  padding: 72px 56px 80px;
+}
+
+/* lignes */
+.authors-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 36px;
+}
+
+.authors-form .form-row.full {
+  grid-template-columns: 1fr;
+}
+
+/* champs */
+.authors-form input,
+.authors-form textarea {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 16px;
+  border-radius: 14px;
+  border: 1px solid #d6c3b0;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+.authors-form textarea {
+  min-height: 170px;
+  resize: vertical;
+}
+
+/* focus */
+.authors-form input:focus,
+.authors-form textarea:focus {
+  outline: none;
+  border-color: #b89b7a;
+  box-shadow: 0 0 0 3px rgba(184, 155, 122, 0.15);
+}
+
+/* upload */
+.upload-box {
+  margin-top: 48px;
+  padding: 36px;
+  border: 2px dashed #d6c3b0;
+  border-radius: 22px;
+  text-align: center;
+  color: #6b4b35;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-box input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  background: rgba(184, 155, 122, 0.08);
+}
+
+/* bouton envoyer */
+.authors-submit {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.authors-submit button {
+  padding: 18px 64px;
+  font-size: 18px;
+  border-radius: 40px;
+  background: #b89b7a;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.authors-submit button:hover {
+  background: #a98a66;
+}
+/* =========================================================
+   BOUTON RETOUR — STYLE UNIFIÉ (TOUTES LES PAGES)
+========================================================= */
+
+.back-link {
+  text-align: right;
+  margin-bottom: 60px;
+}
+
+.back-link a,
+.back-link {
+  font-size: 15px;
+  color: #8b6f5a;
+  text-decoration: none;
+}
+
+.back-link a:hover,
+.back-link:hover {
+  text-decoration: underline;
+}
+/* =========================================================
+   FORMULAIRES — SANS CADRE GRIS (FINAL)
+   Pages : اشتراك / دعم / استمارة الكاتب
+========================================================= */
+
+/* On enlève le bloc gris pour les pages formulaire */
+.subscribe-page.content-page,
+.support-page.content-page,
+.authors-form-page.content-page {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  padding: 160px 24px 200px !important;
+}
+
+/* Le formulaire reste centré */
+.subscribe-form,
+.support-form,
+.authors-form {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* On enlève toute "boîte" visuelle */
+.authors-form-box {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
 }
