@@ -69,11 +69,13 @@ export default function SubscribePage() {
                     : "PLAN_ANNUEL_ID_ICI",
               });
             }}
-onApprove={(data, actions) => {
+onApprove={(data) => {
   return Promise.resolve().then(() => {
-    console.log("OK", data);
+    alert("تم تفعيل الاشتراك بنجاح ✅");
+    console.log("Subscription ID:", data.subscriptionID);
   });
 }}
+
 
 
             onError={(err) => {
