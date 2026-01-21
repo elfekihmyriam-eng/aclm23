@@ -6,7 +6,7 @@ import Footer from "../../../components/Footer";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function SubscribePage() {
-  const [plan, setPlan] = useState<"monthly" | "yearly">("monthly");
+  const [plan, setPlan] = useState("monthly");
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function SubscribePage() {
           يرجى ملء الاستمارة أدناه ثم اختيار نوع الاشتراك المناسب.
         </p>
 
-        {/* ===== FORMULAIRE ===== */}
+        {/* FORMULAIRE */}
         <form className="subscribe-form">
           <div className="form-row">
             <input type="text" placeholder="الاسم" required />
@@ -38,7 +38,7 @@ export default function SubscribePage() {
           </div>
         </form>
 
-        {/* ===== CHOIX DU PLAN ===== */}
+        {/* CHOIX DU PLAN */}
         <div className="plans">
           <div
             className={plan === "monthly" ? "plan active" : "plan"}
@@ -57,7 +57,7 @@ export default function SubscribePage() {
           </div>
         </div>
 
-        {/* ===== PAYPAL ABONNEMENT ===== */}
+        {/* PAYPAL */}
         <div className="payment-box">
           <PayPalButtons
             style={{ layout: "vertical", color: "black" }}
@@ -69,14 +69,10 @@ export default function SubscribePage() {
                     : "PLAN_ANNUEL_ID_ICI",
               });
             }}
-onApprove={((data: any) => {
-  alert("تم تفعيل الاشتراك بنجاح ✅");
-  console.log("Subscription ID:", data.subscriptionID);
-}) as any}
-
-
-
-
+            onApprove={(data) => {
+              alert("تم تفعيل الاشتراك بنجاح ✅");
+              console.log("Subscription ID:", data.subscriptionID);
+            }}
             onError={(err) => {
               console.error("PayPal error:", err);
               alert("حدث خطأ أثناء تفعيل الاشتراك");
