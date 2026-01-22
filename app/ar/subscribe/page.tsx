@@ -8,7 +8,6 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 export default function SubscribePage() {
   const [plan, setPlan] = useState<"monthly" | "yearly">("monthly");
 
-  // champs formulaire
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -88,7 +87,12 @@ export default function SubscribePage() {
         <div className="plans">
           <div
             className={plan === "monthly" ? "plan active" : "plan"}
+            role="button"
+            tabIndex={0}
             onClick={() => setPlan("monthly")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setPlan("monthly");
+            }}
           >
             <strong>اشتراك شهري</strong>
             <span>15 $</span>
@@ -96,7 +100,12 @@ export default function SubscribePage() {
 
           <div
             className={plan === "yearly" ? "plan active" : "plan"}
+            role="button"
+            tabIndex={0}
             onClick={() => setPlan("yearly")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setPlan("yearly");
+            }}
           >
             <strong>اشتراك سنوي</strong>
             <span>80 $</span>
@@ -112,37 +121,44 @@ export default function SubscribePage() {
           )}
 
           {isFormValid && (
-            <PayPalButtons
-              style={{ layout: "vertical" }}
-              createSubscription={(data, actions) => {
-                if (!actions.subscription) {
-                  return Promise.reject("Subscriptions not supported");
-                }
+            <div style={{ marginTop: "30px" }}>
+              <PayPalButtons
+                key={plan} // 🔴 force le re-render quand le plan change
+                style={{ layout: "vertical" }}
+                createOrder={(data, actions) => {
+                  const amount =
+                    plan === "monthly" ? "15.00" : "80.00";
 
-                return actions.subscription.create({
-                  // ⚠️ REMPLACE PAR TES VRAIS PLAN IDs PAYPAL
-                  plan_id:
-                    plan === "monthly"
-                      ? "P-MONTHLY_PLAN_ID"
-                      : "P-YEARLY_PLAN_ID",
-                });
-              }}
-              onApprove={(data) => {
-                return Promise.resolve().then(() => {
-                  alert("تم تفعيل الاشتراك بنجاح ✅");
-
-                  console.log("SUBSCRIPTION:", {
-                    subscriptionId: data.subscriptionID,
-                    plan,
-                    ...form,
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        description:
+                          plan === "monthly"
+                            ? "Abonnement mensuel – ACLM"
+                            : "Abonnement annuel – ACLM",
+                        amount: {
+                          currency_code: "USD",
+                          value: amount,
+                        },
+                      },
+                    ],
                   });
-                });
-              }}
-              onError={(err) => {
-                console.error("PayPal error:", err);
-                alert("حدث خطأ أثناء تفعيل الاشتراك");
-              }}
-            />
+                }}
+                onApprove={(data, actions) => {
+                  return actions.order!.capture().then(() => {
+                    alert(
+                      plan === "monthly"
+                        ? "Paiement mensuel effectué avec succès ✅"
+                        : "Paiement annuel effectué avec succès ✅"
+                    );
+                  });
+                }}
+                onError={(err) => {
+                  console.error("PayPal error:", err);
+                  alert("Erreur PayPal. Merci de réessayer.");
+                }}
+              />
+            </div>
           )}
         </div>
       </main>
@@ -151,3 +167,4 @@ export default function SubscribePage() {
     </>
   );
 }
+
