@@ -10,10 +10,9 @@ export default function PayPalProvider({
   return (
     <PayPalScriptProvider
       options={{
-        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID as string,
+        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
         currency: "USD",
-        intent: "subscription",
-        vault: true,
+        intent: "capture",
         components: "buttons",
       }}
     >
