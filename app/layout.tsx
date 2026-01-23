@@ -1,10 +1,5 @@
 import "./globals.css";
-import PayPalProvider from "@/components/PayPalProvider";
-
-export const metadata = {
-  title: "ACLM",
-  description: "Association canadienne pour la littérature migrante",
-};
+import PayPalProvider from "./providers/PayPalProvider";
 
 export default function RootLayout({
   children,
@@ -12,7 +7,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar">
       <body>
         <PayPalProvider>
           {children}
@@ -21,4 +16,3 @@ export default function RootLayout({
     </html>
   );
 }
-

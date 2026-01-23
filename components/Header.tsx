@@ -1,27 +1,36 @@
+import Link from "next/link";
+import Image from "next/image";
+
 export default function Header() {
   return (
-    <header className="header-fixed">
-      <nav className="nav-fixed">
+    <header className="header-bar" dir="rtl">
+      <div className="header-container">
+        {/* LOGO */}
+        <Link href="/ar" className="header-logo">
+          <Image
+            src="/images/logo2.png"
+            alt="الجمعية الكندية للأدب المهجري"
+            width={40}
+            height={40}
+            priority
+          />
+        </Link>
 
-        {/* Liens principaux */}
-        <div className="nav-links">
-          <a href="#about">نبذة عن الجمعيّة</a>
-          <a href="#activities">أنشطة الجمعيّة</a>
-          <a href="#forum">المنتدى</a>
-          <a href="#books">الإصدارات</a>
-          <a href="#authors">الكتّاب</a>
+        {/* MENU */}
+        <nav className="header-menu">
+          <Link href="/ar#about">نبذة عن الجمعيّة</Link>
+          <Link href="/ar#activities">أنشطة الجمعيّة</Link>
+          <Link href="/ar#forum">المنتدى</Link>
+          <Link href="/ar#books">الإصدارات</Link>
+          <Link href="/ar#authors">الكتّاب</Link>
+        </nav>
+
+        {/* LANG */}
+        <div className="header-lang">
+          <Link href="/fr">FR</Link>
         </div>
-
-        {/* Actions (UN SEUL اشتراك) */}
-        <div className="nav-actions">
-          
-          <a href="/ar/subscribe" className="nav-btn">اشتراك</a>
-        <a href="/ar/support" className="nav-btn nav-btn-primary">دعم</a>
-       <a href="/fr" className="nav-btn">FR</a>
-
-        </div>
-
-      </nav>
+      </div>
     </header>
   );
 }
+
