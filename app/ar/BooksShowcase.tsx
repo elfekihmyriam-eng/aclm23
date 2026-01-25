@@ -3,11 +3,13 @@
 import { useState } from "react";
 
 const books = [
-  "/images/livre1.jpg",
+  "/images/livre8.jpg",
   "/images/livre2.jpg",
   "/images/livre3.jpg",
   "/images/livre4.jpg",
   "/images/livre5.jpg",
+  "/images/livre7.jpg",
+  "/images/livre1.jpg",
 ];
 
 export default function BooksShowcase() {
