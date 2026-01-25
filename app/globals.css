@@ -1431,3 +1431,176 @@ body {
   opacity: 0.8;
 }
 
+/* ===== BOOKS SHOWCASE ===== */
+
+.books-showcase {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.books-stage {
+  position: relative;
+  height: 520px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book {
+  position: absolute;
+  transition: all 0.5s ease;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  border-radius: 6px;
+}
+
+/* Livre central */
+.book-0 {
+  width: 320px;
+  z-index: 3;
+  transform: translateX(0) scale(1);
+}
+
+/* Livres voisins */
+.book--1 {
+  width: 220px;
+  transform: translateX(-220px) scale(0.9);
+  opacity: 0.8;
+  z-index: 2;
+}
+
+.book-1 {
+  width: 220px;
+  transform: translateX(220px) scale(0.9);
+  opacity: 0.8;
+  z-index: 2;
+}
+
+/* Livres plus éloignés */
+.book--2 {
+  width: 180px;
+  transform: translateX(-420px) scale(0.8);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.book-2 {
+  width: 180px;
+  transform: translateX(420px) scale(0.8);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* Navigation */
+.books-nav {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 1rem;
+}
+
+.books-nav button {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* ===== BOOKS CTA (ÉDITORIAL) ===== */
+
+.books-cta {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: transparent;
+  color: #000;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.books-cta:hover {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.4);
+}
+
+
+
+
+/* ===== BOOKS GALLERY (ORIGINAL DESIGN) ===== */
+
+.books-gallery {
+  padding: 80px 0;
+}
+
+.books-gallery-header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 0 20px 12px;
+}
+
+.books-gallery-header button {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.books-gallery-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 20px;
+  scroll-behavior: smooth;
+}
+
+.book-card {
+  min-width: 220px;
+  transition: transform 0.3s ease;
+}
+
+.book-card img {
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+}
+
+.book-meta {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.book-card:hover .book-meta {
+  opacity: 1;
+}
+
+.book-title {
+  display: block;
+  font-weight: 600;
+}
+
+.book-author {
+  opacity: 0.7;
+}
+
+.books-gallery-link {
+  display: inline-block;
+  margin: 30px 20px 0;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  color: #000;
+}
+

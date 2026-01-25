@@ -2,6 +2,9 @@ import Header from "../../components/Header";
 import CarouselDots from "../../components/CarouselDots";
 import Footer from "../../components/Footer";
 import Image from "next/image";
+import BooksShowcase from "./BooksShowcase";
+
+
 
 export default function HomePage() {
   return (
@@ -90,21 +93,17 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* ===== الإصدارات ===== */}
-        <section
-          id="books"
-          className="content-page books-carousel-section"
-        >
-          <h2 className="content-title-sm">الإصدارات من المهجر</h2>
+{/* ===== الإصدارات ===== */}
+<section
+  id="books"
+  className="content-page books-carousel-section"
+>
+  <h2 className="content-title-sm">الإصدارات من المهجر</h2>
 
-          <div className="books-carousel">
-            <div className="books-track">
-              <img src="/images/livre1.jpg" alt="Livre 1" />
-              <img src="/images/livre2.jpg" alt="Livre 2" />
-              <img src="/images/livre3.jpg" alt="Livre 3" />
-            </div>
-          </div>
-        </section>
+  <BooksShowcase />
+</section>
+
+
 
         {/* ===== الكتّاب ===== */}
         <section id="authors" className="content-page">
@@ -130,4 +129,5 @@ export default function HomePage() {
     </>
   );
 }
+
 
