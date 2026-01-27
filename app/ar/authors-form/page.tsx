@@ -14,9 +14,7 @@ export default function AuthorsFormPage() {
   return (
     <div className="content-page authors-form-page" dir="rtl">
       {/* Bouton retour */}
-     <Link href="/ar" className="back-link">
-
-
+      <Link href="/ar" className="back-link">
         ← العودة إلى الصفحة الرئيسيّة
       </Link>
 
@@ -29,9 +27,27 @@ export default function AuthorsFormPage() {
             الأدبية. جميع الحقول إلزامية.
           </p>
 
+          {/* 🔒 شرط العضوية */}
+         <p
+  className="subscribe-condition"
+  style={{
+    marginTop: "16px",
+    marginBottom: "28px",
+    fontSize: "14px",
+    lineHeight: "1.8",
+    color: "#444",
+    fontWeight: 600, // أكثر غِلَظًا
+  }}
+>
+  * الاشتراك في الجمعيّة مجّاني ومتاح لكافّة الكتّاب والكاتبات
+  المهاجرين، ولا يترتّب عنه أيّ التزام ماليّ. ويُعدّ تقديم
+  طلب التسجيل إقرارًا بالاطّلاع على شروط العضويّة والموافقة
+  عليها.
+</p>
+
+
           <form onSubmit={handleSubmit} className="authors-form">
             <div className="authors-form-box">
-
               {/* الاسم / اللقب */}
               <div className="form-row">
                 <input type="text" placeholder="الاسم" required />
@@ -74,7 +90,6 @@ export default function AuthorsFormPage() {
                   إرسال الاستمارة
                 </button>
               </div>
-
             </div>
           </form>
         </>
@@ -89,4 +104,5 @@ export default function AuthorsFormPage() {
     </div>
   );
 }
+
 

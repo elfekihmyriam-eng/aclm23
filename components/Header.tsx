@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Header() {
+export default function Header({
+  onOpenRegister,
+}: {
+  onOpenRegister?: () => void;
+}) {
   return (
     <header className="header-bar" dir="rtl">
       <div className="header-container">
@@ -23,6 +29,16 @@ export default function Header() {
           <Link href="/ar#forum">المنتدى</Link>
           <Link href="/ar#books">الإصدارات</Link>
           <Link href="/ar#authors">الكتّاب</Link>
+
+          {/* BOUTON MODALE */}
+          {onOpenRegister && (
+            <button
+              onClick={onOpenRegister}
+              className="header-register-btn"
+            >
+              استمارة الكتّاب
+            </button>
+          )}
         </nav>
 
         {/* LANG */}

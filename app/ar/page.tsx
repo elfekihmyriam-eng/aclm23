@@ -1,10 +1,11 @@
+
+"use client";
 import Header from "../../components/Header";
 import CarouselDots from "../../components/CarouselDots";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
-
-
+import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 
 export default function HomePage() {
   return (
@@ -23,15 +24,14 @@ export default function HomePage() {
             className="heroImage"
           />
 
-          {/* TITRE + BOUTON SUR L’IMAGE */}
+          {/* TITRE + BOUTON */}
           <div className="hero-overlay">
             <h1 className="hero-title">
               الجمعية الكندية للأدب المهجري
             </h1>
 
-            <a href="/ar/authors-form" className="hero-cta">
-              استمارة الكتّاب
-            </a>
+            {/* Bouton qui ouvre la fenêtre */}
+            <WriterSubscribeTrigger />
           </div>
         </section>
 
@@ -93,17 +93,14 @@ export default function HomePage() {
           </p>
         </section>
 
-{/* ===== الإصدارات ===== */}
-<section
-  id="books"
-  className="content-page books-carousel-section"
->
-  <h2 className="content-title-sm">الإصدارات من المهجر</h2>
-
-  <BooksShowcase />
-</section>
-
-
+        {/* ===== الإصدارات ===== */}
+        <section
+          id="books"
+          className="content-page books-carousel-section"
+        >
+          <h2 className="content-title-sm">الإصدارات من المهجر</h2>
+          <BooksShowcase />
+        </section>
 
         {/* ===== الكتّاب ===== */}
         <section id="authors" className="content-page">
@@ -129,5 +126,4 @@ export default function HomePage() {
     </>
   );
 }
-
 

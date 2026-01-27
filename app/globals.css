@@ -1603,4 +1603,17 @@ body {
   text-decoration: underline;
   color: #000;
 }
+/* Overlay translucide (fenêtres modales) */
+.modal-overlay {
+  background: rgba(204, 204, 204, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px); /* Safari */
+}
+
+/* Fallback si le blur n’est pas supporté */
+@supports not ((backdrop-filter: blur(4px))) {
+  .modal-overlay {
+    background: rgba(204, 204, 204, 0.85);
+  }
+}
 
