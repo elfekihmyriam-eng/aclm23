@@ -1738,3 +1738,140 @@ body {
   font-size: 14px;
   margin-top: 8px;
 }
+/* ===== FOOTER STRUCTURE ===== */
+
+.site-footer {
+  background: #000;
+  color: #fff;
+  padding: 64px 20px 0;
+}
+
+.site-footer__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* IDENTITÉ */
+.site-footer__identity {
+  margin-bottom: 32px;
+}
+
+.site-footer__name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.site-footer__status {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.65;
+}
+
+/* ACTIONS */
+.site-footer__actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+/* EMAIL */
+.site-footer__email {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 36px; /* ⬅️ espace AVANT la séparation */
+}
+
+.site-footer__email a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255,255,255,0.4);
+}
+
+.site-footer__email a:hover {
+  border-bottom-color: #fff;
+}
+
+/* SEPARATOR */
+.site-footer__separator {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 0;
+}
+
+/* COPYRIGHT */
+.site-footer__bottom {
+  padding: 18px 0 24px;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.5;
+}
+/* ===== CONDITIONS PAGE ===== */
+
+.conditions-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.conditions-top {
+  margin-bottom: 24px;
+}
+
+.conditions-back {
+  font-size: 14px;
+  text-decoration: none;
+  color: #000;
+  opacity: 0.6;
+}
+
+.conditions-back:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.conditions-content section {
+  margin-bottom: 28px;
+}
+
+.conditions-content h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.conditions-content p {
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.conditions-bottom {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.conditions-close {
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 999px;
+  background: #c9a47a;
+  color: #000;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.conditions-close:hover {
+  background: #d8b892;
+}
+.conditions-bottom,
+.conditions-top {
+  position: relative;
+  z-index: 5; /* ✅ au-dessus de tout overlay */
+}
+
+.conditions-close,
+.conditions-back {
+  pointer-events: auto; /* ✅ force le clic */
+}
+
