@@ -1,11 +1,12 @@
-
 "use client";
+
 import Header from "../../components/Header";
 import CarouselDots from "../../components/CarouselDots";
 import Footer from "../../components/Footer";
 import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
+import FeaturedAuthors from "../../components/FeaturedAuthors";
 
 export default function HomePage() {
   return (
@@ -30,7 +31,7 @@ export default function HomePage() {
               الجمعية الكندية للأدب المهجري
             </h1>
 
-            {/* Bouton qui ouvre la fenêtre */}
+            {/* Bouton inscription écrivain */}
             <WriterSubscribeTrigger />
           </div>
         </section>
@@ -102,21 +103,9 @@ export default function HomePage() {
           <BooksShowcase />
         </section>
 
-        {/* ===== الكتّاب ===== */}
-        <section id="authors" className="content-page">
-          <h2 className="content-title-sm">الكتّاب من المهجر</h2>
-
-          <div className="authors-grid">
-            <div className="author-card">
-              <img src="/images/author1.jpg" alt="كاتب" />
-              <h3>اسم الكاتب</h3>
-            </div>
-
-            <div className="author-card">
-              <img src="/images/author2.jpg" alt="كاتبة" />
-              <h3>اسم الكاتبة</h3>
-            </div>
-          </div>
+        {/* ===== كتّاب مميّزون ===== */}
+        <section className="content-page">
+          <FeaturedAuthors />
         </section>
 
         <CarouselDots />

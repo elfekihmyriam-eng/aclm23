@@ -28,7 +28,9 @@ export default function Header({
           <Link href="/ar#activities">أنشطة الجمعيّة</Link>
           <Link href="/ar#forum">المنتدى</Link>
           <Link href="/ar#books">الإصدارات</Link>
-          <Link href="/ar#authors">الكتّاب</Link>
+
+          {/* ✅ PAGE AUTEURS */}
+          <Link href="/ar/authors">كتّاب من المهجر</Link>
 
           {/* BOUTON MODALE */}
           {onOpenRegister && (
@@ -49,4 +51,5 @@ export default function Header({
     </header>
   );
 }
+
 
