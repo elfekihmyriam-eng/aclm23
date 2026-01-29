@@ -1874,4 +1874,141 @@ body {
 .conditions-back {
   pointer-events: auto; /* ✅ force le clic */
 }
+/* ===== ADMIN ===== */
+
+.admin-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+  background: #f3f3f3;
+}
+
+.admin-header h1 {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.admin-subtitle {
+  opacity: 0.7;
+  margin-bottom: 32px;
+}
+
+.admin-empty {
+  opacity: 0.6;
+}
+
+.admin-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+  border: 2px solid #ddd;
+}
+
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge-featured {
+  margin-right: 8px;
+}
+
+.badge-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.badge-accepted {
+  background: #e6f4ea;
+  color: #1e7f43;
+}
+
+.badge-rejected {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.badge-pending {
+  background: #eee;
+  color: #555;
+}
+/* ===== AUTEUR HOME — DESIGN PROPRE ===== */
+
+.author-card--home {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px 20px;
+  max-width: 260px;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.author-card--home:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+/* Wrapper carré = cercle parfait */
+.author-photo-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #d6c3b0;
+  background: #f3f3f3;
+}
+
+/* Image toujours circulaire */
+.author-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Placeholder */
+.author-photo.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+/* Texte */
+.author-name {
+  margin: 10px 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.author-country {
+  font-size: 14px;
+  opacity: 0.75;
+}
+.admin-nav-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-nav-btn:hover {
+  opacity: 0.85;
+}
+
+.admin-nav-btn.ghost {
+  background: transparent;
+  color: #000;
+}
 

@@ -1,5 +1,43 @@
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
+/* ===============================
+   NAVIGATION ADMIN (SIMPLE & FIABLE)
+================================ */
+function AdminNav() {
+  return (
+    <nav
+      dir="rtl"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "14px",
+        margin: "30px 0 50px",
+        flexWrap: "wrap",
+      }}
+    >
+      <Link href="/admin/authors">
+        <button className="admin-nav-btn">إدارة الكتّاب</button>
+      </Link>
+
+      <Link href="/admin/books">
+        <button className="admin-nav-btn">إدارة الإصدارات</button>
+      </Link>
+
+      <Link href="/admin/crm">
+        <button className="admin-nav-btn">CRM البريد</button>
+      </Link>
+
+      <Link href="/ar">
+        <button className="admin-nav-btn ghost">⬅️ الموقع</button>
+      </Link>
+    </nav>
+  );
+}
+
+/* ===============================
+   PAGE ADMIN AUTHORS
+================================ */
 export default async function AdminAuthorsPage() {
   const { data: authors, error } = await supabase
     .from("authors")
@@ -11,27 +49,23 @@ export default async function AdminAuthorsPage() {
   }
 
   return (
-    <div dir="rtl" style={{ padding: 40, background: "#eee" }}>
-      <h1 style={{ marginBottom: 30 }}>طلبات الكتّاب (الإدارة)</h1>
+    <main dir="rtl" className="admin-wrapper">
+      {/* ===== HEADER ===== */}
+      <header className="admin-header">
+        <h1>طلبات الكتّاب (الإدارة)</h1>
+        <p className="admin-subtitle">⭐ كتّابنا من المهجر</p>
+      </header>
 
-      {authors?.length === 0 && <p>لا توجد طلبات بعد.</p>}
+      {/* ===== MENU ADMIN ===== */}
+      <AdminNav />
 
-      {authors?.map((a) => (
-        <div
-          key={a.id}
-          style={{
-            background: "#fff",
-            padding: 24,
-            marginBottom: 24,
-            borderRadius: 12,
-            border:
-              a.status === "accepted"
-                ? "2px solid #4caf50"
-                : a.status === "rejected"
-                ? "2px solid #f44336"
-                : "2px solid #ccc",
-          }}
-        >
+      {/* ===== LISTE ===== */}
+      {authors.length === 0 && (
+        <p className="admin-empty">لا توجد طلبات بعد.</p>
+      )}
+
+      {authors.map((a) => (
+        <article key={a.id} className="admin-card">
           {/* ===== INFOS ===== */}
           <h2>
             {a.first_name} {a.last_name}
@@ -47,31 +81,34 @@ export default async function AdminAuthorsPage() {
           </p>
 
           {/* ===== BIO ===== */}
-          <p><strong>نبذة:</strong></p>
-          <p style={{ whiteSpace: "pre-line" }}>{a.bio}</p>
+          {a.bio && (
+            <>
+              <strong>نبذة:</strong>
+              <p style={{ whiteSpace: "pre-line" }}>{a.bio}</p>
+            </>
+          )}
 
           {/* ===== PHOTO ===== */}
           <div style={{ marginTop: 16 }}>
-            <strong>صورة الكاتب:</strong><br />
+            <strong>صورة الكاتب:</strong>
             {a.photo_url ? (
               <>
-                <img
-                  src={a.photo_url}
-                  alt="Photo auteur"
-                  style={{
-                    width: 120,
-                    height: 120,
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    marginTop: 8,
-                    border: "1px solid #ddd",
-                  }}
-                />
-                <div>
-                  <a href={a.photo_url} target="_blank" download>
-                    ⬇️ تحميل الصورة
-                  </a>
+                <div style={{ marginTop: 8 }}>
+                  <img
+                    src={a.photo_url}
+                    alt="صورة الكاتب"
+                    style={{
+                      width: 120,
+                      height: 120,
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                      border: "1px solid #ddd",
+                    }}
+                  />
                 </div>
+                <a href={a.photo_url} target="_blank" download>
+                  ⬇️ تحميل الصورة
+                </a>
               </>
             ) : (
               <p style={{ color: "#999" }}>لا توجد صورة</p>
@@ -81,13 +118,13 @@ export default async function AdminAuthorsPage() {
           {/* ===== COVERS ===== */}
           <div style={{ marginTop: 16 }}>
             <strong>أغلفة الكتب:</strong>
-            {a.covers && a.covers.length > 0 ? (
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 8 }}>
+            {Array.isArray(a.covers) && a.covers.length > 0 ? (
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 {a.covers.map((url: string, i: number) => (
                   <div key={i} style={{ textAlign: "center" }}>
                     <img
                       src={url}
-                      alt={`Cover ${i}`}
+                      alt={`غلاف ${i + 1}`}
                       style={{
                         width: 100,
                         height: 140,
@@ -109,18 +146,19 @@ export default async function AdminAuthorsPage() {
             )}
           </div>
 
-          {/* ===== ACTIONS (NO JS) ===== */}
-          <div style={{ marginTop: 24, display: "flex", gap: 10, flexWrap: "wrap" }}>
+          {/* ===== ACTIONS ÉDITORIALES ===== */}
+          <div
+            style={{
+              marginTop: 24,
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
+            }}
+          >
             <form action="/api/admin/authors/action" method="POST">
               <input type="hidden" name="id" value={a.id} />
               <input type="hidden" name="action" value="accept" />
-              <button>✅ قبول</button>
-            </form>
-
-            <form action="/api/admin/authors/action" method="POST">
-              <input type="hidden" name="id" value={a.id} />
-              <input type="hidden" name="action" value="reject" />
-              <button>❌ رفض</button>
+              <button>✅ نشر في كتّاب من المهجر</button>
             </form>
 
             <form action="/api/admin/authors/action" method="POST">
@@ -131,8 +169,16 @@ export default async function AdminAuthorsPage() {
                 value={a.featured ? "unfeature" : "feature"}
               />
               <button>
-                {a.featured ? "☆ إلغاء التمييز" : "⭐ تمييز"}
+                {a.featured
+                  ? "⭐ إزالة من الصفحة الرئيسية"
+                  : "⭐ إبراز في الصفحة الرئيسية"}
               </button>
+            </form>
+
+            <form action="/api/admin/authors/action" method="POST">
+              <input type="hidden" name="id" value={a.id} />
+              <input type="hidden" name="action" value="reject" />
+              <button>❌ رفض</button>
             </form>
 
             <form action="/api/admin/authors/action" method="POST">
@@ -141,10 +187,9 @@ export default async function AdminAuthorsPage() {
               <button style={{ color: "red" }}>🗑️ حذف</button>
             </form>
           </div>
-        </div>
+        </article>
       ))}
-    </div>
+    </main>
   );
 }
-
 

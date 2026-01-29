@@ -15,23 +15,28 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* BOUTONS */}
+        {/* ACTIONS */}
         <div className="site-footer__actions">
-          <Link href="/ar/support" className="footer-btn">
+          <Link href="/ar/support" className="footer-btn footer-btn--primary">
             تقديم دعم
           </Link>
-          <Link
-            href="/ar/conditions"
-            className="footer-btn footer-btn--ghost"
-          >
-            الشروط العامة
+
+          <Link href="/ar/conditions" className="footer-btn footer-btn--outline">
+            الشروط العامّة
           </Link>
         </div>
 
-     
+        {/* CONTACT */}
+        <p className="site-footer__email">
+          للتواصل: <a href="mailto:info@aclm.ca">info@aclm.ca</a>
+        </p>
 
-      </div> {/* <-- fermeture site-footer__inner */}
+      </div>
 
+      {/* SEPARATOR */}
+      <div className="site-footer__separator" />
+
+      {/* COPYRIGHT */}
       <div className="site-footer__bottom">
         © {new Date().getFullYear()} الجمعية الكندية للأدب المهجري
       </div>

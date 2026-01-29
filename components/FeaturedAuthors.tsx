@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 
+/* ===============================
+   Supabase client (public read)
+================================ */
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+export const dynamic = "force-dynamic";
+
 export default async function FeaturedAuthors() {
-  const { data: authors } = await supabase
+  const { data: authors, error } = await supabase
     .from("authors")
     .select("id, first_name, last_name, country, photo_url")
     .eq("status", "accepted")
@@ -15,14 +20,13 @@ export default async function FeaturedAuthors() {
     .order("created_at", { ascending: false })
     .limit(4);
 
-  if (!authors || authors.length === 0) {
+  // Sécurité silencieuse
+  if (error || !authors || authors.length === 0) {
     return null;
   }
 
   return (
-    <section style={{ marginTop: "60px" }} dir="rtl">
-      <h2 style={{ marginBottom: "24px" }}>كتّاب مميّزون</h2>
-
+    <section dir="rtl" style={{ marginTop: "60px" }}>
       <div
         style={{
           display: "grid",
@@ -33,20 +37,22 @@ export default async function FeaturedAuthors() {
         {authors.map((a) => (
           <Link
             key={a.id}
-            href={`/ar/authors/${a.id}`}
+            href="/ar/authors"   // ✅ lien CORRECT vers la page الكتّاب
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <div
+            <article
+              className="featured-author-card"
               style={{
                 border: "1px solid #e5e5e5",
                 borderRadius: "14px",
                 padding: "16px",
                 background: "#fff",
                 textAlign: "center",
-                transition: "transform .2s ease, box-shadow .2s ease",
+                height: "100%",
+                transition: "transform 0.25s ease, box-shadow 0.25s ease",
               }}
-              className="featured-author-card"
             >
+              {/* PHOTO */}
               {a.photo_url ? (
                 <img
                   src={a.photo_url}
@@ -62,6 +68,7 @@ export default async function FeaturedAuthors() {
                 />
               ) : (
                 <div
+                  aria-hidden
                   style={{
                     width: "100px",
                     height: "100px",
@@ -78,18 +85,21 @@ export default async function FeaturedAuthors() {
                 </div>
               )}
 
-              <h3 style={{ margin: "0 0 6px" }}>
+              {/* NAME */}
+              <h3 style={{ margin: "0 0 6px", fontSize: "16px" }}>
                 {a.first_name} {a.last_name}
               </h3>
 
-              <p style={{ margin: 0, opacity: 0.8 }}>
+              {/* COUNTRY */}
+              <p style={{ margin: 0, opacity: 0.8, fontSize: "14px" }}>
                 🌍 {a.country}
               </p>
-            </div>
+            </article>
           </Link>
         ))}
       </div>
 
+      {/* Hover effect */}
       <style>{`
         .featured-author-card:hover {
           transform: translateY(-4px);
@@ -99,5 +109,3 @@ export default async function FeaturedAuthors() {
     </section>
   );
 }
-
-

@@ -27,7 +27,8 @@ export default function Header({
           <Link href="/ar#about">نبذة عن الجمعيّة</Link>
           <Link href="/ar#activities">أنشطة الجمعيّة</Link>
           <Link href="/ar#forum">المنتدى</Link>
-          <Link href="/ar#books">الإصدارات</Link>
+          <Link href="/ar/books">الإصدارات</Link>
+
 
           {/* ✅ PAGE AUTEURS */}
           <Link href="/ar/authors">كتّاب من المهجر</Link>

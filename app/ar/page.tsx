@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "../../components/Header";
 import CarouselDots from "../../components/CarouselDots";
 import Footer from "../../components/Footer";
@@ -7,6 +5,7 @@ import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 import FeaturedAuthors from "../../components/FeaturedAuthors";
+
 
 export default function HomePage() {
   return (
@@ -31,7 +30,7 @@ export default function HomePage() {
               الجمعية الكندية للأدب المهجري
             </h1>
 
-            {/* Bouton inscription écrivain */}
+            {/* Bouton qui ouvre la fenêtre */}
             <WriterSubscribeTrigger />
           </div>
         </section>
@@ -103,10 +102,14 @@ export default function HomePage() {
           <BooksShowcase />
         </section>
 
-        {/* ===== كتّاب مميّزون ===== */}
-        <section className="content-page">
-          <FeaturedAuthors />
-        </section>
+        {/* ===== الكتّاب ===== */}{/* ===== الكتّاب من المهجر ===== */}
+<section id="authors" className="content-page">
+  <h2 className="content-title-sm">الكتّاب من المهجر</h2>
+
+  {/* Auteurs dynamiques depuis Supabase */}
+  <FeaturedAuthors />
+</section>
+
 
         <CarouselDots />
       </main>
@@ -115,4 +118,5 @@ export default function HomePage() {
     </>
   );
 }
+
 
