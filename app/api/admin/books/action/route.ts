@@ -1,8 +1,5 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+import { NextResponse } from "next/server";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -10,65 +7,87 @@ const supabase = createClient(
 );
 
 export async function POST(req: Request) {
-  try {
-    const formData = await req.formData();
-    const action = formData.get("action");
+  const formData = await req.formData();
+  const action = formData.get("action") as string;
+  const id = formData.get("id") as string;
 
-    /* =========================
-       AJOUT D’UN LIVRE
-    ========================= */
-    if (action === "create") {
-      const title = formData.get("title") as string;
-      const cover_url = formData.get("cover_url") as string;
-      const author_id = formData.get("author_id") as string;
+  if (!action || !id) {
+    return NextResponse.json(
+      { error: "Action ou ID manquant" },
+      { status: 400 }
+    );
+  }
 
-      if (!title || !cover_url || !author_id) {
-        return NextResponse.json(
-          { error: "Données manquantes" },
-          { status: 400 }
-        );
-      }
+  /* ===============================
+     PUBLISH BOOK (ISDARAT)
+  ================================ */
+  if (action === "publish") {
+    const { error } = await supabase
+      .from("books")
+      .update({ published: true })
+      .eq("id", id);
 
-      await supabase.from("books").insert({
-        title,
-        cover_url,
-        author_id,
-        published: false,
-      });
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
     }
 
-    /* =========================
-       PUBLIER / DÉPUBLIER
-    ========================= */
-    if (action === "publish" || action === "unpublish") {
-      const id = formData.get("id") as string;
-
-      await supabase
-        .from("books")
-        .update({ published: action === "publish" })
-        .eq("id", id);
-    }
-
-    /* =========================
-       SUPPRIMER
-    ========================= */
-    if (action === "delete") {
-      const id = formData.get("id") as string;
-
-      await supabase.from("books").delete().eq("id", id);
-    }
-
-    // 🔁 Retour vers l’admin
     return NextResponse.redirect(
       new URL("/admin/books", req.url)
     );
-  } catch (error) {
-    console.error("ADMIN BOOKS ERROR:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
+  }
+
+  /* ===============================
+     UNPUBLISH BOOK
+  ================================ */
+  if (action === "unpublish") {
+    const { error } = await supabase
+      .from("books")
+      .update({ published: false })
+      .eq("id", id);
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.redirect(
+      new URL("/admin/books", req.url)
     );
   }
+
+  /* ===============================
+     DELETE BOOK
+  ================================ */
+  if (action === "delete") {
+    const { error } = await supabase
+      .from("books")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.redirect(
+      new URL("/admin/books", req.url)
+    );
+  }
+
+  /* ===============================
+     UNKNOWN ACTION
+  ================================ */
+  return NextResponse.json(
+    { error: "Action inconnue" },
+    { status: 400 }
+  );
 }
 
 

@@ -1,59 +1,19 @@
-"use client";
+import { supabase } from "@/lib/supabase";
+import BooksShowcaseClient from "./BooksShowcaseClient";
 
-import { useState } from "react";
+export const dynamic = "force-dynamic";
 
-const books = [
-  "/images/livre8.jpg",
-  "/images/livre2.jpg",
-  "/images/livre3.jpg",
-  "/images/livre4.jpg",
-  "/images/livre5.jpg",
-  "/images/livre7.jpg",
-  "/images/livre1.jpg",
-];
+export default async function BooksShowcase() {
+  const { data: books } = await supabase
+    .from("books")
+    .select("id, cover_url")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
 
-export default function BooksShowcase() {
-  const [index, setIndex] = useState(2);
+  if (!books || books.length === 0) return null;
 
-  const prev = () => {
-    setIndex((i) => (i === 0 ? books.length - 1 : i - 1));
-  };
-
-  const next = () => {
-    setIndex((i) => (i === books.length - 1 ? 0 : i + 1));
-  };
-
-  return (
-    <div className="books-showcase">
-      <div className="books-stage">
-        {books.map((src, i) => {
-          const offset = i - index;
-          if (Math.abs(offset) > 2) return null;
-
-          return (
-            <img
-              key={i}
-              src={src}
-              className={`book book-${offset}`}
-              alt=""
-            />
-          );
-        })}
-      </div>
-
-      <div className="books-nav">
-        <button onClick={prev}>←</button>
-        <span>
-          {index + 1}/{books.length}
-        </span>
-        <button onClick={next}>→</button>
-      </div>
-
-     <a href="#" className="books-cta">
-  تعرّف على المزيد
-</a>
-
-    </div>
-  );
+  return <BooksShowcaseClient books={books} />;
 }
+
+
 

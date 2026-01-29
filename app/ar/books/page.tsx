@@ -12,10 +12,20 @@ const supabase = createClient(
 export const dynamic = "force-dynamic";
 
 export default async function BooksPageAr() {
-  const { data: authors, error } = await supabase
-    .from("authors")
-    .select("id, first_name, last_name, covers")
-    .eq("status", "accepted");
+  const { data: books, error } = await supabase
+    .from("books")
+    .select(`
+      id,
+      title,
+      cover_url,
+      authors (
+        id,
+        first_name,
+        last_name
+      )
+    `)
+    .eq("published", true)
+    .order("created_at", { ascending: false });
 
   if (error) {
     return (
@@ -25,21 +35,12 @@ export default async function BooksPageAr() {
     );
   }
 
-  const covers =
-    authors?.flatMap((a) =>
-      (a.covers || []).map((url: string) => ({
-        url,
-        authorId: a.id,
-        name: `${a.first_name} ${a.last_name}`,
-      }))
-    ) || [];
-
   return (
     <main className="content-page" dir="rtl">
       <h1 className="subscribe-title">الإصدارات</h1>
 
-      {covers.length === 0 ? (
-        <p>لا توجد إصدارات بعد.</p>
+      {(!books || books.length === 0) ? (
+        <p>لا توجد إصدارات منشورة بعد.</p>
       ) : (
         <div
           style={{
@@ -48,11 +49,14 @@ export default async function BooksPageAr() {
             gap: "20px",
           }}
         >
-          {covers.map((c, i) => (
-            <Link key={i} href={`/ar/authors/${c.authorId}`}>
+          {books.map((book) => (
+            <Link
+              key={book.id}
+              href={`/ar/authors/${book.authors?.id}`}
+            >
               <img
-                src={c.url}
-                alt={c.name}
+                src={book.cover_url}
+                alt={book.title}
                 style={{
                   width: "100%",
                   borderRadius: "8px",

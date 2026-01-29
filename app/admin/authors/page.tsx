@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 /* ===============================
-   NAVIGATION ADMIN (SIMPLE & FIABLE)
+   NAVIGATION ADMIN
 ================================ */
 function AdminNav() {
   return (
@@ -41,12 +41,10 @@ function AdminNav() {
 export default async function AdminAuthorsPage() {
   const { data: authors, error } = await supabase
     .from("authors")
-    .select("*")
+    .select(
+      "id, first_name, last_name, email, phone, country, status, bio, featured, photo_url, covers"
+    )
     .order("created_at", { ascending: false });
-
-  if (error) {
-    return <p>خطأ في تحميل الطلبات</p>;
-  }
 
   return (
     <main dir="rtl" className="admin-wrapper">
@@ -59,14 +57,22 @@ export default async function AdminAuthorsPage() {
       {/* ===== MENU ADMIN ===== */}
       <AdminNav />
 
-      {/* ===== LISTE ===== */}
-      {authors.length === 0 && (
+      {/* ===== ERREUR ===== */}
+      {error && (
+        <p style={{ color: "red", textAlign: "center" }}>
+          خطأ في تحميل الطلبات
+        </p>
+      )}
+
+      {/* ===== LISTE VIDE ===== */}
+      {(!authors || authors.length === 0) && (
         <p className="admin-empty">لا توجد طلبات بعد.</p>
       )}
 
-      {authors.map((a) => (
+      {/* ===== LISTE AUTEURS ===== */}
+      {authors?.map((a) => (
         <article key={a.id} className="admin-card">
-          {/* ===== INFOS ===== */}
+          {/* INFOS */}
           <h2>
             {a.first_name} {a.last_name}
             {a.featured && <span> ⭐</span>}
@@ -75,12 +81,11 @@ export default async function AdminAuthorsPage() {
           <p>📧 {a.email}</p>
           <p>📞 {a.phone}</p>
           <p>🌍 {a.country}</p>
-
           <p>
             <strong>الحالة:</strong> {a.status}
           </p>
 
-          {/* ===== BIO ===== */}
+          {/* BIO */}
           {a.bio && (
             <>
               <strong>نبذة:</strong>
@@ -88,38 +93,34 @@ export default async function AdminAuthorsPage() {
             </>
           )}
 
-          {/* ===== PHOTO ===== */}
+          {/* PHOTO */}
           <div style={{ marginTop: 16 }}>
             <strong>صورة الكاتب:</strong>
             {a.photo_url ? (
-              <>
-                <div style={{ marginTop: 8 }}>
-                  <img
-                    src={a.photo_url}
-                    alt="صورة الكاتب"
-                    style={{
-                      width: 120,
-                      height: 120,
-                      objectFit: "cover",
-                      borderRadius: "50%",
-                      border: "1px solid #ddd",
-                    }}
-                  />
-                </div>
-                <a href={a.photo_url} target="_blank" download>
-                  ⬇️ تحميل الصورة
-                </a>
-              </>
+              <img
+                src={a.photo_url}
+                alt="صورة الكاتب"
+                style={{
+                  width: 120,
+                  height: 120,
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                  border: "1px solid #ddd",
+                  display: "block",
+                  marginTop: 8,
+                }}
+              />
             ) : (
               <p style={{ color: "#999" }}>لا توجد صورة</p>
             )}
           </div>
 
-          {/* ===== COVERS ===== */}
+          {/* ===== COVERS + BOUTON ISDARAT ===== */}
           <div style={{ marginTop: 16 }}>
             <strong>أغلفة الكتب:</strong>
+
             {Array.isArray(a.covers) && a.covers.length > 0 ? (
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 {a.covers.map((url: string, i: number) => (
                   <div key={i} style={{ textAlign: "center" }}>
                     <img
@@ -133,11 +134,39 @@ export default async function AdminAuthorsPage() {
                         border: "1px solid #ddd",
                       }}
                     />
-                    <div>
+
+                    <div style={{ marginTop: 6 }}>
                       <a href={url} target="_blank" download>
                         ⬇️ تحميل
                       </a>
                     </div>
+
+                    {/* ✅ BOUTON نشر في الإصدارات */}
+                    <form
+                      action="/api/admin/books/from-author-cover"
+                      method="POST"
+                      style={{ marginTop: 6 }}
+                    >
+                      <input
+                        type="hidden"
+                        name="cover_url"
+                        value={url}
+                      />
+                      <input
+                        type="hidden"
+                        name="author_id"
+                        value={a.id}
+                      />
+                      <input
+                        type="hidden"
+                        name="title"
+                        value={`كتاب لـ ${a.first_name} ${a.last_name}`}
+                      />
+
+                      <button type="submit">
+                        📘 نشر هذا الغلاف في الإصدارات
+                      </button>
+                    </form>
                   </div>
                 ))}
               </div>
@@ -146,7 +175,7 @@ export default async function AdminAuthorsPage() {
             )}
           </div>
 
-          {/* ===== ACTIONS ÉDITORIALES ===== */}
+          {/* ===== ACTIONS AUTEUR ===== */}
           <div
             style={{
               marginTop: 24,
@@ -192,4 +221,6 @@ export default async function AdminAuthorsPage() {
     </main>
   );
 }
+
+
 
