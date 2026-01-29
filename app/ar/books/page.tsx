@@ -37,9 +37,25 @@ export default async function BooksPageAr() {
 
   return (
     <main className="content-page" dir="rtl">
+      {/* 🔙 BOUTON RETOUR */}
+      <Link
+        href="/ar"
+        style={{
+          display: "inline-block",
+          marginBottom: "24px",
+          fontSize: "14px",
+          opacity: 0.7,
+          textDecoration: "none",
+        }}
+      >
+        ← رجوع إلى الصفحة الرئيسية
+      </Link>
+
+      {/* TITRE */}
       <h1 className="subscribe-title">الإصدارات</h1>
 
-      {(!books || books.length === 0) ? (
+      {/* CONTENU */}
+      {!books || books.length === 0 ? (
         <p>لا توجد إصدارات منشورة بعد.</p>
       ) : (
         <div
@@ -47,12 +63,14 @@ export default async function BooksPageAr() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
             gap: "20px",
+            marginTop: "24px",
           }}
         >
           {books.map((book) => (
             <Link
               key={book.id}
               href={`/ar/authors/${book.authors?.id}`}
+              style={{ display: "block" }}
             >
               <img
                 src={book.cover_url}
@@ -61,6 +79,8 @@ export default async function BooksPageAr() {
                   width: "100%",
                   borderRadius: "8px",
                   cursor: "pointer",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.12)",
+                  transition: "transform 0.2s ease",
                 }}
               />
             </Link>
