@@ -13,13 +13,29 @@ export default async function AuthorsPageAr() {
     .from("authors")
     .select("id, first_name, last_name, country, bio, photo_url, featured")
     .eq("status", "accepted")
-    .order("featured", { ascending: false }) // ⭐ en premier
+    .order("featured", { ascending: false }) // ⭐ المميز أولاً
     .order("created_at", { ascending: false });
 
   return (
     <main className="content-page" dir="rtl">
+      {/* 🔙 BOUTON RETOUR */}
+      <Link
+        href="/ar"
+        style={{
+          display: "inline-block",
+          marginBottom: "24px",
+          fontSize: "14px",
+          opacity: 0.7,
+          textDecoration: "none",
+        }}
+      >
+        ← رجوع إلى الصفحة الرئيسية
+      </Link>
+
+      {/* TITRE */}
       <h1 className="subscribe-title">الكتّاب</h1>
 
+      {/* CONTENU */}
       {!authors || authors.length === 0 ? (
         <p>لا يوجد كتّاب معروضون حاليًا.</p>
       ) : (
@@ -37,6 +53,7 @@ export default async function AuthorsPageAr() {
             return (
               <div
                 key={a.id}
+                className="author-card"
                 style={{
                   position: "relative",
                   border: "1px solid #e5e5e5",
@@ -46,9 +63,8 @@ export default async function AuthorsPageAr() {
                   textAlign: "center",
                   transition: "transform 0.25s ease, box-shadow 0.25s ease",
                 }}
-                className="author-card"
               >
-                {/* ⭐ FEATURED BADGE */}
+                {/* ⭐ BADGE مميّز */}
                 {a.featured && (
                   <span
                     style={{
@@ -66,7 +82,7 @@ export default async function AuthorsPageAr() {
                   </span>
                 )}
 
-                {/* LINK TO PROFILE */}
+                {/* LIEN PROFIL */}
                 <Link
                   href={`/ar/authors/${a.id}`}
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -103,12 +119,12 @@ export default async function AuthorsPageAr() {
                     </div>
                   )}
 
-                  {/* NAME */}
+                  {/* NOM */}
                   <h2 style={{ margin: "0 0 6px", fontSize: "18px" }}>
                     {a.first_name} {a.last_name}
                   </h2>
 
-                  {/* COUNTRY */}
+                  {/* PAYS */}
                   <p style={{ margin: 0, opacity: 0.8 }}>
                     🌍 {a.country}
                   </p>
@@ -121,13 +137,13 @@ export default async function AuthorsPageAr() {
                       lineHeight: 1.6,
                     }}
                   >
-                    {a.bio?.length > 140
+                    {a.bio?.length && a.bio.length > 140
                       ? a.bio.slice(0, 140) + "…"
                       : a.bio}
                   </p>
                 </Link>
 
-                {/* LIBRA STORY BUTTON */}
+                {/* LIEN LIBRA STORY */}
                 <a
                   href={libraStoryUrl}
                   target="_blank"
@@ -152,7 +168,7 @@ export default async function AuthorsPageAr() {
         </div>
       )}
 
-      {/* HOVER EFFECT (CSS INLINE SAFE) */}
+      {/* EFFET HOVER */}
       <style>{`
         .author-card:hover {
           transform: translateY(-6px);
