@@ -2024,4 +2024,138 @@ iframe.goog-te-banner-frame,
 body {
   top: 0 !important;
 }
+/* ===== FIX MENU MOBILE ===== */
 
+/* Conteneur du menu (mobile) */
+@media (max-width: 768px) {
+  .header-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    height: 100vh;          /* 🔑 toute la hauteur écran */
+    max-height: 100vh;
+
+    overflow-y: auto;       /* 🔑 scroll si le menu est long */
+    -webkit-overflow-scrolling: touch;
+
+    background: #000;       /* garde ton fond */
+    z-index: 9999;
+  }
+}
+
+/* ===============================
+   FIX GLOBAL MOBILE CLICK / OVERLAY
+================================ */
+
+/* Empêche un bloc invisible de bloquer les clics */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* S'assurer que le body est cliquable */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  touch-action: manipulation;
+}
+
+/* Supprimer tout overlay invisible */
+.hero-page::before,
+.hero-page::after {
+  pointer-events: none;
+}
+
+/* Le header DOIT rester cliquable */
+.header-bar,
+.header-container,
+.header-menu,
+.header-lang {
+  pointer-events: auto;
+  z-index: 9999;
+}
+
+/* ===============================
+   MENU MOBILE — FIX TOTAL
+================================ */
+@media (max-width: 768px) {
+
+  /* Menu principal */
+  .header-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    height: 100dvh;
+    max-height: 100dvh;
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    background-color: #000;
+    padding-top: 4rem;
+
+    z-index: 10000;
+  }
+
+  /* Chaque lien doit être cliquable */
+  .header-menu a,
+  .header-menu button {
+    display: block;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  /* Zone langue */
+  .header-lang {
+    position: relative;
+    z-index: 10001;
+  }
+}
+/* ===============================
+   GOOGLE TRANSLATE — MOBILE FIX
+================================ */
+.goog-te-combo {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+}
+
+/* Empêche Google d'injecter des overlays */
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+"use client";
+
+export default function LanguageSwitcher() {
+  const changeLang = (lang: string) => {
+    const select = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
+    if (!select) return;
+
+    select.value = "";
+    select.dispatchEvent(new Event("change"));
+
+    setTimeout(() => {
+      select.value = lang;
+      select.dispatchEvent(new Event("change"));
+    }, 150);
+  };
+
+  return (
+    <div
+      className="header-lang"
+      style={{ display: "flex", gap: "8px" }}
+    >
+      <button onClick={() => changeLang("ar")}>AR</button>
+      <button onClick={() => changeLang("fr")}>FR</button>
+      <button onClick={() => changeLang("en")}>EN</button>
+    </div>
+  );
+}
