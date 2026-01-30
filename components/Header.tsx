@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header({
   onOpenRegister,
@@ -24,29 +25,28 @@ export default function Header({
 
         {/* MENU */}
         <nav className="header-menu">
-          <Link href="/ar#about">نبذة عن الجمعيّة</Link>
-          <Link href="/ar#activities">أنشطة الجمعيّة</Link>
-          <Link href="/ar#forum">المنتدى</Link>
-          <Link href="/ar/books">الإصدارات</Link>
+        <Link href="/ar#about" data-i18n-key="about">نبذة عن الجمعيّة</Link>
+<Link href="/ar#activities" data-i18n-key="activities">أنشطة الجمعيّة</Link>
+<Link href="/ar#forum" data-i18n-key="forum">المنتدى</Link>
+<Link href="/ar/books" data-i18n-key="books">الإصدارات</Link>
+<Link href="/ar/authors" data-i18n-key="authors">كتّاب من المهجر</Link>
 
 
-          {/* ✅ PAGE AUTEURS */}
-          <Link href="/ar/authors">كتّاب من المهجر</Link>
-
-          {/* BOUTON MODALE */}
           {onOpenRegister && (
-            <button
-              onClick={onOpenRegister}
-              className="header-register-btn"
-            >
-              استمارة الكتّاب
-            </button>
+         <button
+  onClick={onOpenRegister}
+  className="header-register-btn"
+  data-i18n-key="writers_form"
+>
+  استمارة الكتّاب
+</button>
+
           )}
         </nav>
 
         {/* LANG */}
         <div className="header-lang">
-          <Link href="/fr">FR</Link>
+          <LanguageSwitcher />
         </div>
       </div>
     </header>
