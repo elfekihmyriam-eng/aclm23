@@ -1,25 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { supabase } from "../../lib/supabase"; // ✅ client unique
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function login() {
-    await supabase.auth.signInWithOtp({
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-       emailRedirectTo: `${window.location.origin}/auth/callback`,
+        // ✅ REDIRECTION DIRECTE ET DÉFINITIVE VERS L’ADMIN
+        emailRedirectTo: "https://aclm.ca/aclm/admin",
       },
     });
 
-    alert("تحقق من بريدك الإلكتروني ثم سيتم تحويلك تلقائيًا إلى لوحة الإدارة");
+    setLoading(false);
+
+    if (error) {
+      alert("حدث خطأ، يرجى المحاولة مرة أخرى");
+      return;
+    }
+
+    alert("تحقق من بريدك الإلكتروني، سيتم تحويلك تلقائيًا إلى لوحة الإدارة");
   }
 
   return (
@@ -31,9 +37,12 @@ export default function LoginPage() {
         placeholder="البريد الإلكتروني"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        disabled={loading}
       />
 
-      <button onClick={login}>دخول</button>
+      <button onClick={login} disabled={loading}>
+        {loading ? "جارٍ الإرسال..." : "دخول"}
+      </button>
     </main>
   );
 }
