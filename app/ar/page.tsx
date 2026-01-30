@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import Header from "../../components/Header";
 import CarouselDots from "../../components/CarouselDots";
 import Footer from "../../components/Footer";
@@ -5,9 +10,26 @@ import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 import FeaturedAuthors from "../../components/FeaturedAuthors";
+import { supabase } from "../../lib/supabase";
+
+
+
 
 
 export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // 🔐 Si Supabase renvoie un token dans l’URL (magic link / email)
+    if (typeof window !== "undefined" && window.location.hash.includes("access_token")) {
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) {
+          router.replace("/admin");
+        }
+      });
+    }
+  }, [router]);
+
   return (
     <>
       <Header />
@@ -102,14 +124,11 @@ export default function HomePage() {
           <BooksShowcase />
         </section>
 
-        {/* ===== الكتّاب ===== */}{/* ===== الكتّاب من المهجر ===== */}
-<section id="authors" className="content-page">
-  <h2 className="content-title-sm">الكتّاب من المهجر</h2>
-
-  {/* Auteurs dynamiques depuis Supabase */}
-  <FeaturedAuthors />
-</section>
-
+        {/* ===== الكتّاب من المهجر ===== */}
+        <section id="authors" className="content-page">
+          <h2 className="content-title-sm">الكتّاب من المهجر</h2>
+          <FeaturedAuthors />
+        </section>
 
         <CarouselDots />
       </main>
