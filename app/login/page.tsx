@@ -14,7 +14,8 @@ export default function LoginPage() {
       email,
       options: {
         // ✅ REDIRECTION DIRECTE ET DÉFINITIVE VERS L’ADMIN
-        emailRedirectTo: "https://aclm.ca/aclm/admin",
+        emailRedirectTo: "https://aclm.ca/admin",
+
       },
     });
 
