@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "../../lib/supabase"; // ✅ client unique
+import { supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,9 +13,8 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        // ✅ REDIRECTION DIRECTE ET DÉFINITIVE VERS L’ADMIN
-        emailRedirectTo: "https://aclm.ca/admin",
-
+        // 🔑 IMPORTANT : passer par le callback
+        emailRedirectTo: "https://aclm.ca/auth/callback",
       },
     });
 
@@ -41,10 +40,11 @@ export default function LoginPage() {
         disabled={loading}
       />
 
-      <button onClick={login} disabled={loading}>
+      <button type="button" onClick={login} disabled={loading}>
         {loading ? "جارٍ الإرسال..." : "دخول"}
       </button>
     </main>
   );
 }
+
 
