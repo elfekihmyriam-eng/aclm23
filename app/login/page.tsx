@@ -8,12 +8,17 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   async function login() {
+    if (!email || !email.includes("@")) {
+      alert("يرجى إدخال بريد إلكتروني صحيح");
+      return;
+    }
+
     setLoading(true);
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        // 🔑 IMPORTANT : passer par le callback
+        // 🔑 OBLIGATOIRE : passer par le callback
         emailRedirectTo: "https://aclm.ca/auth/callback",
       },
     });
@@ -21,11 +26,12 @@ export default function LoginPage() {
     setLoading(false);
 
     if (error) {
-      alert("حدث خطأ، يرجى المحاولة مرة أخرى");
+      console.error("Supabase login error:", error.message);
+      alert("حدث خطأ أثناء إرسال رابط الدخول، يرجى المحاولة مرة أخرى");
       return;
     }
 
-    alert("تحقق من بريدك الإلكتروني، سيتم تحويلك تلقائيًا إلى لوحة الإدارة");
+    alert("تحقق من بريدك الإلكتروني، ثم اضغط على رابط الدخول");
   }
 
   return (
@@ -38,6 +44,7 @@ export default function LoginPage() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={loading}
+        style={{ direction: "ltr" }}
       />
 
       <button type="button" onClick={login} disabled={loading}>
@@ -46,5 +53,4 @@ export default function LoginPage() {
     </main>
   );
 }
-
 
