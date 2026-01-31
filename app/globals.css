@@ -2132,30 +2132,5 @@ iframe.goog-te-banner-frame {
 body {
   top: 0 !important;
 }
-"use client";
 
-export default function LanguageSwitcher() {
-  const changeLang = (lang: string) => {
-    const select = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
-    if (!select) return;
 
-    select.value = "";
-    select.dispatchEvent(new Event("change"));
-
-    setTimeout(() => {
-      select.value = lang;
-      select.dispatchEvent(new Event("change"));
-    }, 150);
-  };
-
-  return (
-    <div
-      className="header-lang"
-      style={{ display: "flex", gap: "8px" }}
-    >
-      <button onClick={() => changeLang("ar")}>AR</button>
-      <button onClick={() => changeLang("fr")}>FR</button>
-      <button onClick={() => changeLang("en")}>EN</button>
-    </div>
-  );
-}

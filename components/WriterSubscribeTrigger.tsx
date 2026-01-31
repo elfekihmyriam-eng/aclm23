@@ -94,22 +94,24 @@ export default function WriterSubscribeTrigger() {
             </p>
 
             {/* Bouton vers الاستمارة – noir sobre */}
-            <Link
-              href="/ar/authors-form"
-              style={{
-                display: "block",
-                width: "100%",
-                textAlign: "center",
-                padding: "14px 0",
-                background: "#111",
-                color: "#fff",
-                borderRadius: "999px",
-                textDecoration: "none",
-                fontWeight: 600,
-              }}
-            >
-              الانتقال إلى استمارة الكاتب
-            </Link>
+            
+    <Link
+  href="/ar/authors-form"
+  style={{
+    display: "block",
+    width: "100%",
+    textAlign: "center",
+    padding: "14px 0",
+    background: "#111",
+    color: "#fff",
+    borderRadius: "999px",
+    textDecoration: "none",
+    fontWeight: 600,
+  }}
+>
+  الانتقال إلى استمارة الكاتب
+</Link>
+
           </div>
         </>
       )}

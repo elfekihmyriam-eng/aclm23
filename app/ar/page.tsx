@@ -11,20 +11,18 @@ import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 import FeaturedAuthors from "../../components/FeaturedAuthors";
 
-// ✅ BON import Supabase (selon TA structure réelle)
 import { supabase } from "../../lib/supabase";
 
 export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // ✅ Méthode officielle Supabase v2
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        if (event === "SIGNED_IN" && session) {
-          // 🔁 REDIRECTION CORRECTE CHEZ TOI
-          router.replace("/aclm/admin");
-        }
+       if (event === "SIGNED_IN" && session && window.location.pathname === "/login") {
+  router.replace("/admin");
+}
+
       }
     );
 
@@ -38,7 +36,6 @@ export default function HomePage() {
       <Header />
 
       <main>
-        {/* ===== IMAGE PRINCIPALE ===== */}
         <section className="hero-page">
           <Image
             src="/images/hero-livres-v4.png"
@@ -49,7 +46,6 @@ export default function HomePage() {
             className="heroImage"
           />
 
-          {/* TITRE + BOUTON */}
           <div className="hero-overlay">
             <h1 className="hero-title">
               الجمعية الكندية للأدب المهجري
@@ -59,10 +55,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ===== نبذة عن الجمعيّة ===== */}
         <section id="about" className="content-page">
           <h2 className="content-title-sm">نبذة عن الجمعيّة</h2>
-
           <p className="content-text">
             تهدف الجمعيّة الكنديّة للأدب المهجريّ إلى تعزيز حضور الأدب
             المهجريّ بوصفه جزءًا لا يتجزّأ من التنوّع الأدبيّ الكنديّ.
@@ -74,56 +68,28 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* ===== أنشطة الجمعيّة ===== */}
         <section id="activities" className="content-page activities-section">
           <h2 className="content-title-sm">أنشطة الجمعيّة</h2>
-
           <ul className="activities-list">
-            <li>
-              عرض مؤلّفات الكتّاب المهاجرين والتعريف بها عبر الصفحات
-              الرقميّة الرسميّة للجمعيّة
-            </li>
-            <li>
-              مرافقة الكتّاب في مسار نشر كتبهم ضمن مشاريع النشر التي
-              تشرف عليها الجمعيّة
-            </li>
-            <li>
-              إتاحة الكتب في المكتبات العربيّة في أمريكا الشماليّة
-            </li>
-            <li>
-              دعم ترجمة الأعمال إلى الفرنسيّة أو الإنجليزيّة وفق برامج
-              الجمعيّة
-            </li>
-            <li>تنظيم لقاءات وندوات أدبيّة</li>
-            <li>ورشات كتابة وبحث</li>
-            <li>الاحتفاء بالإبداع المهاجر</li>
+            <li>عرض مؤلّفات الكتّاب المهاجرين...</li>
           </ul>
         </section>
 
-        {/* ===== المنتدى ===== */}
         <section id="forum" className="content-page">
           <h2 className="content-title-sm">
             المنتدى الوطنيّ للأدب المهجريّ
           </h2>
-
-          <p className="content-text">
-            تنظّم الجمعيّة منتدى وطنيّا سنويّا يوميْ 21 و22 مايو،
-            تزامنًا مع اليوم العالميّ للتنوّع الثّقافيّ التّابع
-            لليونسكو. يجمع المنتدى كتّابًا مهاجرين ونقّادًا وباحثين
-            لمناقشة قضايا الأدب المهجريّ.
-          </p>
+          <p className="content-text">...</p>
         </section>
 
-        {/* ===== الإصدارات ===== */}
         <section id="books" className="content-page books-carousel-section">
           <h2 className="content-title-sm">الإصدارات من المهجر</h2>
-          <BooksShowcase />
+          {/* <BooksShowcase /> */}
         </section>
 
-        {/* ===== الكتّاب من المهجر ===== */}
         <section id="authors" className="content-page">
           <h2 className="content-title-sm">الكتّاب من المهجر</h2>
-          <FeaturedAuthors />
+          {/* <FeaturedAuthors /> */}
         </section>
 
         <CarouselDots />
