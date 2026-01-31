@@ -2,14 +2,13 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../../../lib/supabase";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleAuth = async () => {
-      // Échange le token contre une session (cookies)
+    const finalize = async () => {
       const { error } = await supabase.auth.getSession();
 
       if (error) {
@@ -17,11 +16,10 @@ export default function AuthCallbackPage() {
         return;
       }
 
-      // Session OK → admin
       router.replace("/admin");
     };
 
-    handleAuth();
+    finalize();
   }, [router]);
 
   return null;
