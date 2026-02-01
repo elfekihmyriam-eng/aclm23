@@ -1,37 +1,37 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function login() {
-    if (!email || !email.includes("@")) {
-      alert("يرجى إدخال بريد إلكتروني صحيح");
+    if (!email || !password) {
+      alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
       return;
     }
 
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      options: {
-        // 🔑 OBLIGATOIRE : passer par le callback
-        emailRedirectTo: "https://aclm.ca/auth/callback",
-      },
+      password,
     });
 
     setLoading(false);
 
     if (error) {
-      console.error("Supabase login error:", error.message);
-      alert("حدث خطأ أثناء إرسال رابط الدخول، يرجى المحاولة مرة أخرى");
+      alert("بيانات الدخول غير صحيحة");
       return;
     }
 
-    alert("تحقق من بريدك الإلكتروني، ثم اضغط على رابط الدخول");
+    // 🔑 IMPORTANT : passer par le callback
+    router.replace("/auth/callback");
   }
 
   return (
@@ -47,10 +47,20 @@ export default function LoginPage() {
         style={{ direction: "ltr" }}
       />
 
+      <input
+        type="password"
+        placeholder="كلمة المرور"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        disabled={loading}
+        style={{ direction: "ltr" }}
+      />
+
       <button type="button" onClick={login} disabled={loading}>
-        {loading ? "جارٍ الإرسال..." : "دخول"}
+        {loading ? "جارٍ التحقق..." : "دخول"}
       </button>
     </main>
   );
 }
+
 

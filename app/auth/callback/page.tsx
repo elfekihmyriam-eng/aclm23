@@ -9,13 +9,16 @@ export default function AuthCallbackPage() {
 
   useEffect(() => {
     const finalize = async () => {
-      const { error } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-      if (error) {
+      if (!session) {
         router.replace("/login");
         return;
       }
 
+      // ✅ Session OK → admin
       router.replace("/admin");
     };
 
