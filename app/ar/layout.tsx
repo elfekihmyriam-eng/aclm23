@@ -2,6 +2,8 @@ import "../globals.css";
 import type { ReactNode } from "react";
 import Script from "next/script";
 
+
+
 // ✅ chemin relatif OK
 import I18nUiPatch from "../../components/I18nUiPatch";
 

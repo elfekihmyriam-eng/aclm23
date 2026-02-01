@@ -1,35 +1,34 @@
 "use client";
 
+function setCookie(name: string, value: string) {
+  document.cookie = `${name}=${value}; path=/`;
+}
+
 export default function LanguageSwitcher() {
-  const changeLang = (lang: string) => {
-    const select = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
-    if (!select) return;
+  const changeLang = (lang: "ar" | "fr" | "en") => {
+    if (lang === "ar") {
+      // retour langue originale
+      setCookie("googtrans", "/ar/ar");
+    } else {
+      // forcer traduction Google
+      setCookie("googtrans", `/ar/${lang}`);
+    }
 
-    select.value = "";
-    select.dispatchEvent(new Event("change"));
-
-    setTimeout(() => {
-      select.value = lang;
-      select.dispatchEvent(new Event("change"));
-    }, 100);
+    // reload léger pour appliquer la langue
+    window.location.reload();
   };
 
   return (
-    <div
-      className="notranslate"
-      translate="no"
-      style={{ display: "flex", gap: "10px" }}
-    >
-      <button className="notranslate" translate="no" type="button" onClick={() => changeLang("ar")}>
+    <div className="header-lang" style={{ display: "flex", gap: "8px" }}>
+      <button type="button" onClick={() => changeLang("ar")}>
         AR
       </button>
-      <button className="notranslate" translate="no" type="button" onClick={() => changeLang("fr")}>
+      <button type="button" onClick={() => changeLang("fr")}>
         FR
       </button>
-      <button className="notranslate" translate="no" type="button" onClick={() => changeLang("en")}>
+      <button type="button" onClick={() => changeLang("en")}>
         EN
       </button>
     </div>
   );
 }
-
