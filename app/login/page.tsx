@@ -31,7 +31,7 @@ export default function LoginPage() {
     }
 
     // 🔑 IMPORTANT : passer par le callback
-    router.replace("/auth/callback");
+    router.replace("/admin");
   }
 
   return (
