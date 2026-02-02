@@ -147,13 +147,22 @@ export default async function AdminAuthorsPage() {
                       method="POST"
                       style={{ marginTop: 6 }}
                     >
-                      <input type="hidden" name="cover_url" value={url} />
-                      <input type="hidden" name="author_id" value={a.id} />
+                      <input
+                        type="hidden"
+                        name="cover_url"
+                        value={url}
+                      />
+                      <input
+                        type="hidden"
+                        name="author_id"
+                        value={a.id}
+                      />
                       <input
                         type="hidden"
                         name="title"
                         value={`كتاب لـ ${a.first_name} ${a.last_name}`}
                       />
+
                       <button type="submit">
                         📘 نشر هذا الغلاف في الإصدارات
                       </button>
@@ -212,4 +221,6 @@ export default async function AdminAuthorsPage() {
     </main>
   );
 }
+
+
 
