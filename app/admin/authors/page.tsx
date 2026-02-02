@@ -154,7 +154,6 @@ export default async function AdminAuthorsPage() {
                         name="title"
                         value={`كتاب لـ ${a.first_name} ${a.last_name}`}
                       />
-
                       <button type="submit">
                         📘 نشر هذا الغلاف في الإصدارات
                       </button>

@@ -1,8 +1,3 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-
 import Header from "../../components/Header";
 import CarouselDots from "../../components/CarouselDots";
 import Footer from "../../components/Footer";
@@ -11,31 +6,14 @@ import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 import FeaturedAuthors from "../../components/FeaturedAuthors";
 
-import { supabase } from "../../lib/supabase";
 
 export default function HomePage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-       if (event === "SIGNED_IN" && session && window.location.pathname === "/login") {
-  router.replace("/admin");
-}
-
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, [router]);
-
   return (
     <>
       <Header />
 
       <main>
+        {/* ===== IMAGE PRINCIPALE ===== */}
         <section className="hero-page">
           <Image
             src="/images/hero-livres-v4.png"
@@ -46,17 +24,21 @@ export default function HomePage() {
             className="heroImage"
           />
 
+          {/* TITRE + BOUTON */}
           <div className="hero-overlay">
             <h1 className="hero-title">
               الجمعية الكندية للأدب المهجري
             </h1>
 
+            {/* Bouton qui ouvre la fenêtre */}
             <WriterSubscribeTrigger />
           </div>
         </section>
 
+        {/* ===== نبذة عن الجمعيّة ===== */}
         <section id="about" className="content-page">
           <h2 className="content-title-sm">نبذة عن الجمعيّة</h2>
+
           <p className="content-text">
             تهدف الجمعيّة الكنديّة للأدب المهجريّ إلى تعزيز حضور الأدب
             المهجريّ بوصفه جزءًا لا يتجزّأ من التنوّع الأدبيّ الكنديّ.
@@ -68,29 +50,66 @@ export default function HomePage() {
           </p>
         </section>
 
-        <section id="activities" className="content-page activities-section">
+        {/* ===== أنشطة الجمعيّة ===== */}
+        <section
+          id="activities"
+          className="content-page activities-section"
+        >
           <h2 className="content-title-sm">أنشطة الجمعيّة</h2>
+
           <ul className="activities-list">
-            <li>عرض مؤلّفات الكتّاب المهاجرين...</li>
+            <li>
+              عرض مؤلّفات الكتّاب المهاجرين والتعريف بها عبر الصفحات
+              الرقميّة الرسميّة للجمعيّة
+            </li>
+            <li>
+              مرافقة الكتّاب في مسار نشر كتبهم ضمن مشاريع النشر التي
+              تشرف عليها الجمعيّة
+            </li>
+            <li>
+              إتاحة الكتب في المكتبات العربيّة في أمريكا الشماليّة
+            </li>
+            <li>
+              دعم ترجمة الأعمال إلى الفرنسيّة أو الإنجليزيّة وفق برامج
+              الجمعيّة
+            </li>
+            <li>تنظيم لقاءات وندوات أدبيّة</li>
+            <li>ورشات كتابة وبحث</li>
+            <li>الاحتفاء بالإبداع المهاجر</li>
           </ul>
         </section>
 
+        {/* ===== المنتدى ===== */}
         <section id="forum" className="content-page">
           <h2 className="content-title-sm">
             المنتدى الوطنيّ للأدب المهجريّ
           </h2>
-          <p className="content-text">...</p>
+
+          <p className="content-text">
+            تنظّم الجمعيّة منتدى وطنيّا سنويّا يوميْ 21 و22 مايو،
+            تزامنًا مع اليوم العالميّ للتنوّع الثّقافيّ التّابع
+            لليونسكو. يجمع المنتدى كتّابًا مهاجرين ونقّادًا وباحثين
+            لمناقشة قضايا الأدب المهجريّ.
+          </p>
         </section>
 
-        <section id="books" className="content-page books-carousel-section">
+        {/* ===== الإصدارات ===== */}
+        <section
+          id="books"
+          className="content-page books-carousel-section"
+        >
           <h2 className="content-title-sm">الإصدارات من المهجر</h2>
-          {/* <BooksShowcase /> */}
+          <BooksShowcase />
         </section>
 
-        <section id="authors" className="content-page">
-          <h2 className="content-title-sm">الكتّاب من المهجر</h2>
-          {/* <FeaturedAuthors /> */}
-        </section>
+        {/* ===== الكتّاب ===== */}{/* ===== الكتّاب من المهجر ===== */}
+<section id="authors" className="content-page">
+  <h2 className="content-title-sm">الكتّاب من المهجر</h2>
+
+  {/* Auteurs dynamiques depuis Supabase */}
+  <FeaturedAuthors />
+</section>
+
 
         <CarouselDots />
       </main>
@@ -99,5 +118,6 @@ export default function HomePage() {
     </>
   );
 }
+
 
 
