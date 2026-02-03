@@ -67,9 +67,11 @@ export default async function BooksPageAr() {
           }}
         >
           {books.map((book) => (
-            <Link
+            <a
               key={book.id}
-              href={`/ar/authors/${book.authors?.id}`}
+              href={book.cover_url}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ display: "block" }}
             >
               <img
@@ -83,7 +85,7 @@ export default async function BooksPageAr() {
                   transition: "transform 0.2s ease",
                 }}
               />
-            </Link>
+            </a>
           ))}
         </div>
       )}
