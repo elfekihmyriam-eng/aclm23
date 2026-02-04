@@ -10,7 +10,7 @@ export default function BookCreateForm({
   return (
     <form
       action="/api/admin/books/action"
-      method="POST"
+      method="post"
       encType="multipart/form-data"
       style={{ maxWidth: 500 }}
     >
@@ -45,10 +45,11 @@ export default function BookCreateForm({
         </select>
       </div>
 
-      <button>إضافة الكتاب</button>
+      <button type="submit">إضافة الكتاب</button>
     </form>
   );
 }
+
 
 
 

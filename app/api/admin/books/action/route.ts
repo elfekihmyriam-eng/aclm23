@@ -9,17 +9,95 @@ const supabase = createClient(
 export async function POST(req: Request) {
   const formData = await req.formData();
   const action = formData.get("action") as string;
-  const id = formData.get("id") as string;
 
-  if (!action || !id) {
+  if (!action) {
     return NextResponse.json(
-      { error: "Action ou ID manquant" },
+      { error: "Action manquante" },
       { status: 400 }
     );
   }
 
   /* ===============================
-     PUBLISH BOOK (ISDARAT)
+     CREATE BOOK (UPLOAD CLEAN NAME)
+  ================================ */
+  if (action === "create") {
+    const title = formData.get("title") as string | null;
+    const author_id = formData.get("author_id") as string | null;
+    const cover = formData.get("cover") as File | null;
+
+    if (!title || !author_id || !cover) {
+      return NextResponse.json(
+        { error: "Données manquantes" },
+        { status: 400 }
+      );
+    }
+
+    const originalName = cover.name;
+    const extension = originalName.split(".").pop() || "jpg";
+
+    const safeName = originalName
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+    const fileName = `${Date.now()}-${safeName}`;
+    const filePath = `${author_id}/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("author-covers")
+      .upload(filePath, cover, {
+        contentType: cover.type,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      return NextResponse.json(
+        { error: uploadError.message },
+        { status: 500 }
+      );
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage
+      .from("author-covers")
+      .getPublicUrl(filePath);
+
+    const { error: insertError } = await supabase
+      .from("books")
+      .insert({
+        title,
+        author_id,
+        cover_url: publicUrl,
+        published: true, // ✅ FIX VISIBILITÉ
+      });
+
+    if (insertError) {
+      return NextResponse.json(
+        { error: insertError.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.redirect(
+      new URL("/admin/books", req.url)
+    );
+  }
+
+  /* ===============================
+     ACTIONS AVEC ID OBLIGATOIRE
+  ================================ */
+  const id = formData.get("id") as string;
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "ID manquant" },
+      { status: 400 }
+    );
+  }
+
+  /* ===============================
+     PUBLISH BOOK
   ================================ */
   if (action === "publish") {
     const { error } = await supabase
@@ -81,9 +159,6 @@ export async function POST(req: Request) {
     );
   }
 
-  /* ===============================
-     UNKNOWN ACTION
-  ================================ */
   return NextResponse.json(
     { error: "Action inconnue" },
     { status: 400 }
