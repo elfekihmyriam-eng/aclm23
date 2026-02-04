@@ -12,29 +12,32 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function login() {
-    if (!email || !password) {
-      alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
-      return;
-    }
-
-    setLoading(true);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    setLoading(false);
-
-    if (error) {
-      alert("بيانات الدخول غير صحيحة");
-      return;
-    }
-
-    // 🔑 IMPORTANT : passer par le callback
-    router.replace("/ar/admin");
+ async function login() {
+  if (!email || !password) {
+    alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+    return;
   }
+
+  setLoading(true);
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  setLoading(false);
+
+  if (error) {
+    alert("بيانات الدخول غير صحيحة");
+    return;
+  }
+
+  // ✅ IMPORTANT : forcer la synchro auth AVANT de quitter la page
+  await supabase.auth.getUser();
+
+  router.replace("/admin/authors");
+  router.refresh();
+}
 
   return (
     <main className="content-page" dir="rtl">

@@ -7,10 +7,8 @@ export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirection vers une section admin existante
     router.replace("/admin/authors");
   }, [router]);
 
   return null;
 }
-
