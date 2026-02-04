@@ -6,6 +6,8 @@ import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 import FeaturedAuthors from "../../components/FeaturedAuthors";
 
+export const dynamic = "force-dynamic";
+
 
 export default function HomePage() {
   return (
