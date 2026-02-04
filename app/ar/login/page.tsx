@@ -33,7 +33,7 @@ export default function LoginPage() {
     }
 
     // 🔑 IMPORTANT : passer par le callback
-    router.replace("/admin");
+    router.replace("/ar/admin");
   }
 
   return (

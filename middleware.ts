@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest) {
 
   // 🔐 Protection admin
   if (req.nextUrl.pathname.startsWith("/admin") && !user) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/ar/login", req.url));
   }
 
   return res;
