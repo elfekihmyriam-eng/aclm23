@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs/edge";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
-  const supabase = createMiddlewareClient({ req, res });
 
+  const supabase = createMiddlewareClient({ req, res });
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -20,4 +20,3 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/admin/:path*"],
 };
-
