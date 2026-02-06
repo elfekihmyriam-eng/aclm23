@@ -8,9 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body>
-        {children}
-      </body>
+      <head>
+        {/* Favicon forcé avec nom unique */}
+        <link rel="icon" href="/favicon.ico?v=1" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
