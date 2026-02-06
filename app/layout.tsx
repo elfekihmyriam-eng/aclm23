@@ -1,6 +1,13 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 
+export const metadata = {
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -8,10 +15,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <head>
-        {/* Favicon forcé avec nom unique */}
-        <link rel="icon" href="/favicon.ico?v=1" />
-      </head>
       <body>{children}</body>
     </html>
   );

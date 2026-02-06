@@ -2,6 +2,11 @@ import "../globals.css";
 import type { ReactNode } from "react";
 import Script from "next/script";
 
+export const metadata = {
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 
 
 // ✅ chemin relatif OK
