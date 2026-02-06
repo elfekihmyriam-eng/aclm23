@@ -15,18 +15,18 @@ export default function Header({
         {/* LOGO */}
         <Link href="/ar" className="header-logo">
           <Image
-            src="/images/logo2.png"
-            alt="الجمعية الكندية للأدب المهجري"
-            width={40}
-            height={40}
+            src="/images/logo3.png"
+            alt="الاتحاد الكندي للكتّاب المهاجرين العرب"
+            width={80}
+            height={80}
             priority
           />
         </Link>
 
         {/* MENU */}
         <nav className="header-menu">
-        <Link href="/ar#about" data-i18n-key="about">نبذة عن الجمعيّة</Link>
-<Link href="/ar#activities" data-i18n-key="activities">أنشطة الجمعيّة</Link>
+        <Link href="/ar#about" data-i18n-key="about">نبذة عن الاتحاد</Link>
+<Link href="/ar#activities" data-i18n-key="activities">أنشطة الاتحاد</Link>
 <Link href="/ar#forum" data-i18n-key="forum">المنتدى</Link>
 <Link href="/ar/books" data-i18n-key="books">الإصدارات</Link>
 <Link href="/ar/authors" data-i18n-key="authors">كتّاب من المهجر</Link>
