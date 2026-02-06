@@ -8,7 +8,7 @@ export default function Footer() {
         {/* IDENTITÉ */}
         <div className="site-footer__identity">
           <p className="site-footer__name">
-            الجمعية الكندية للأدب المهجري
+           الاتحادالكندي للكتّاب المهاجرين
           </p>
           <p className="site-footer__status">
             منظّمة ثقافيّة غير ربحيّة · كندا
