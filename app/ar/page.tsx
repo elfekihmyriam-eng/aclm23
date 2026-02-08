@@ -51,7 +51,7 @@ export default function HomePage() {
           id="activities"
           className="content-page activities-section"
         >
-          <h2 className="content-title-sm">أنشطة الجمعيّة</h2>
+          <h2 className="content-title-sm">أنشطة الاتحاد</h2>
 
           <ul className="activities-list">
             <li>
@@ -87,7 +87,7 @@ export default function HomePage() {
           </h2>
 
           <p className="content-text">
-            تنظّم الجمعيّة منتدى وطنيّا سنويّا يوميْ 21 و22 مايو،
+            ينظّم الاتحاد منتدى وطنيّا سنويّا يوميْ 21 و22 مايو،
             تزامنًا مع اليوم العالميّ للتنوّع الثّقافيّ التّابع
             لليونسكو. يجمع المنتدى كتّابًا مهاجرين ونقّادًا وباحثين
             لمناقشة قضايا الأدب المهجريّ.
