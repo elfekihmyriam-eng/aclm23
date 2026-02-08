@@ -1,10 +1,9 @@
-import Header from "../fr/componentsfr/Header";
-import CarouselDots from "../../components/CarouselDots";
-import Footer from "../fr/componentsfr/Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import WriterSubscribeTrigger from "./components/WriterSubscribeTrigger";
+
 import Image from "next/image";
 import BooksShowcase from "../ar/BooksShowcase";
-import WriterSubscribeTrigger from "../fr/componentsfr/WriterSubscribeTrigger";
-import FeaturedAuthors from "../../components/FeaturedAuthors";
 
 export const dynamic = "force-dynamic";
 
@@ -36,9 +35,7 @@ export default function HomePageFr() {
 
         {/* ===== À PROPOS ===== */}
         <section id="about" className="content-page">
-          <h2 className="content-title-sm">
-            Présentation de l’Union
-          </h2>
+          <h2 className="content-title-sm">Présentation de l’Union</h2>
 
           <p className="content-text">
             L’Union canadienne des écrivaines et écrivains migrants arabes a pour
@@ -59,9 +56,7 @@ export default function HomePageFr() {
 
         {/* ===== ACTIVITÉS ===== */}
         <section id="activities" className="content-page activities-section">
-          <h2 className="content-title-sm">
-            Activités de l’Union
-          </h2>
+          <h2 className="content-title-sm">Activités de l’Union</h2>
 
           <p className="content-text">
             Convaincue que l’amélioration des conditions sociales et économiques
@@ -73,11 +68,11 @@ export default function HomePageFr() {
           </p>
 
           <ul className="activities-list">
-            <li>Présentation et valorisation des œuvres des écrivaines et écrivains migrants</li>
-            <li>Accompagnement des auteurs et autrices dans le processus de publication</li>
-            <li>Mise à disposition des ouvrages dans les librairies arabes en Amérique du Nord</li>
-            <li>Soutien à la traduction vers le français ou l’anglais</li>
-            <li>Organisation de rencontres et tables rondes littéraires</li>
+            <li>Présentation et valorisation des œuvres</li>
+            <li>Accompagnement dans le processus de publication</li>
+            <li>Diffusion dans les librairies arabes en Amérique du Nord</li>
+            <li>Soutien à la traduction</li>
+            <li>Rencontres et tables rondes littéraires</li>
             <li>Ateliers d’écriture et de recherche</li>
             <li>Célébration de la création migrante</li>
           </ul>
@@ -92,29 +87,15 @@ export default function HomePageFr() {
           <p className="content-text">
             L’Union organise un forum national annuel les 21 et 22 mai, en
             parallèle de la Journée mondiale de la diversité culturelle
-            proclamée par l’UNESCO. Ce forum réunit des écrivaines et écrivains
-            migrants, des critiques et des chercheurs.
+            proclamée par l’UNESCO.
           </p>
         </section>
 
         {/* ===== PUBLICATIONS ===== */}
         <section id="books" className="content-page books-carousel-section">
-          <h2 className="content-title-sm">
-            Publications de la migration
-          </h2>
+          <h2 className="content-title-sm">Publications de la migration</h2>
           <BooksShowcase />
         </section>
-
-        {/* ===== AUTEURS ===== */}
-        <section id="authors" className="content-page">
-          <h2 className="content-title-sm">
-            Écrivaines et écrivains de la migration
-          </h2>
-
-          <FeaturedAuthors />
-        </section>
-
-        <CarouselDots />
       </main>
 
       <Footer />
