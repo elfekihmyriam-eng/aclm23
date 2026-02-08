@@ -2,8 +2,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WriterSubscribeTrigger from "./components/WriterSubscribeTrigger";
 
+
 import Image from "next/image";
-import BooksShowcase from "../ar/BooksShowcase";
+import BooksShowcase from "../fr/BooksShowcase";
 
 export const dynamic = "force-dynamic";
 
