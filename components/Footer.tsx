@@ -26,7 +26,7 @@ export default function Footer() {
         {/* IDENTITÉ */}
         <div className="site-footer__identity">
           <p className="site-footer__name">
-            الاتحاد الكندي للكتّاب المهاجرين
+            الاتحاد الكندي للكتّاب المهاجرين العرب
           </p>
           <p className="site-footer__status">
             منظّمة ثقافيّة غير ربحيّة · كندا
@@ -56,7 +56,7 @@ export default function Footer() {
 
       {/* COPYRIGHT */}
       <div className="site-footer__bottom">
-        © {new Date().getFullYear()} الجمعية الكندية للأدب المهجري
+        © {new Date().getFullYear()} الاتحاد الكندي للكتّاب المهاجرين العرب
       </div>
     </footer>
   );
