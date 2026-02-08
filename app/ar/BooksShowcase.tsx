@@ -1,3 +1,4 @@
+// app/ar/BooksShowcase.tsx
 import { supabase } from "@/lib/supabase";
 import BooksShowcaseClient from "./BooksShowcaseClient";
 
@@ -14,5 +15,3 @@ export default async function BooksShowcase() {
 
   return <BooksShowcaseClient books={books} />;
 }
-
-

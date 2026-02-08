@@ -3,19 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Header({
+export default function HeaderFr({
   onOpenRegister,
 }: {
   onOpenRegister?: () => void;
 }) {
   return (
-    <header className="header-bar" dir="rtl">
+    <header className="header-bar" dir="ltr">
       <div className="header-container">
         {/* LOGO */}
-        <Link href="/ar" className="header-logo">
+        <Link href="/fr" className="header-logo">
           <Image
             src="/images/logo3.png"
-            alt="الاتحاد الكندي للكتّاب المهاجرين العرب"
+            alt="Union canadienne des écrivaines et écrivains migrants arabes"
             width={80}
             height={80}
             priority
@@ -24,18 +24,18 @@ export default function Header({
 
         {/* MENU */}
         <nav className="header-menu">
-          <Link href="/ar#about">نبذة عن الاتحاد</Link>
-          <Link href="/ar#activities">أنشطة الاتحاد</Link>
-          <Link href="/ar#forum">المنتدى</Link>
-          <Link href="/ar/books">الإصدارات</Link>
-          <Link href="/ar/authors">كتّاب من المهجر</Link>
+          <Link href="/fr#about">À propos de l’Union</Link>
+          <Link href="/fr#activities">Activités</Link>
+          <Link href="/fr#forum">Forum</Link>
+          <Link href="/fr/books">Publications</Link>
+          <Link href="/fr/authors">Auteurs de la migration</Link>
 
           {onOpenRegister && (
             <button
               onClick={onOpenRegister}
               className="header-register-btn"
             >
-              استمارة الكتّاب
+              Formulaire des écrivain·e·s
             </button>
           )}
         </nav>
