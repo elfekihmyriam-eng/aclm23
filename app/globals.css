@@ -2012,4 +2012,124 @@ body {
   color: #000;
 }
 
+/* ===============================
+   FOOTER – VERSION HORIZONTALE STRUCTURÉE
+================================ */
 
+.site-footer {
+  background: #000;
+  color: #fff;
+  padding: 80px 32px 40px;
+}
+
+/* Conteneur principal */
+.site-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr; /* texte | logo */
+  gap: 64px;
+  align-items: start;
+  text-align: right;
+}
+
+/* ===============================
+   COLONNE TEXTE
+================================ */
+
+.site-footer__identity {
+  margin-bottom: 32px;
+}
+
+.site-footer__name {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.site-footer__status {
+  font-size: 14px;
+  opacity: 0.75;
+  margin-bottom: 32px;
+}
+
+/* ===============================
+   ACTIONS (BOUTONS)
+================================ */
+
+.site-footer__actions {
+  display: flex;
+  flex-direction: column;   /* 👈 empilement vertical */
+  gap: 16px;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+/* ===============================
+   CONTACT
+================================ */
+
+.site-footer__email {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-top: 16px;
+}
+
+.site-footer__email a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer__email a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   COLONNE LOGO
+================================ */
+
+.site-footer img {
+  display: block;
+  max-width: 280px;      /* 👈 logo plus grand */
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  opacity: 0.95;
+}
+
+/* ===============================
+   SÉPARATEUR & COPYRIGHT
+================================ */
+
+.site-footer__separator {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 48px 0 24px;
+}
+
+.site-footer__bottom {
+  font-size: 13px;
+  opacity: 0.6;
+  text-align: center;
+}
+
+/* ===============================
+   RESPONSIVE (MOBILE)
+================================ */
+
+@media (max-width: 900px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .site-footer img {
+    max-width: 200px;
+    margin-bottom: 32px;
+  }
+
+  .site-footer__actions {
+    align-items: center;
+  }
+}

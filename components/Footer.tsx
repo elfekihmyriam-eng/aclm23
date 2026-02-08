@@ -1,14 +1,32 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="site-footer" dir="rtl">
       <div className="site-footer__inner">
 
+        {/* LOGO */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "24px",
+          }}
+        >
+          <Image
+            src="/images/footer-logo1.png"
+            alt="الاتحاد الكندي للكتّاب المهاجرين العرب"
+            width={180}
+            height={180}
+            style={{ opacity: 0.9 }}
+          />
+        </div>
+
         {/* IDENTITÉ */}
         <div className="site-footer__identity">
           <p className="site-footer__name">
-           الاتحادالكندي للكتّاب المهاجرين
+            الاتحاد الكندي للكتّاب المهاجرين
           </p>
           <p className="site-footer__status">
             منظّمة ثقافيّة غير ربحيّة · كندا
