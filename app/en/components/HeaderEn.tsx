@@ -22,7 +22,7 @@ export default function HeaderEn({
           />
         </Link>
 
-        {/* MENU */}
+        {/* MAIN MENU */}
         <nav className="header-menu">
           <Link href="/en#about">About the Union</Link>
           <Link href="/en#activities">Activities</Link>
@@ -35,18 +35,18 @@ export default function HeaderEn({
               onClick={onOpenRegister}
               className="header-register-btn"
             >
-              Writers’ Registration Form
+              Writers’ Registration
             </button>
           )}
         </nav>
 
-        {/* LANGUAGE SWITCH (REAL ROUTES) */}
+        {/* LANGUAGE SWITCH */}
         <div className="header-lang">
           <Link href="/ar" className="lang-link">AR</Link>
           <span className="lang-sep">|</span>
           <Link href="/fr" className="lang-link">FR</Link>
           <span className="lang-sep">|</span>
-          <Link href="/en" className="lang-link">EN</Link>
+          <Link href="/en" className="lang-link active">EN</Link>
         </div>
       </div>
     </header>
