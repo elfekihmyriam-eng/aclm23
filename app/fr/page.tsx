@@ -9,6 +9,7 @@ import BooksShowcase from "../fr/BooksShowcase";
 import ChatBotFr from "./components/ChatBotFr";
 
 
+
 export const dynamic = "force-dynamic";
 
 export default function HomePageFr() {

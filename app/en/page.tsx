@@ -2,10 +2,11 @@ import HeaderEn from "./components/HeaderEn";
 import FooterEn from "./components/FooterEn";
 import WriterSubscribeTriggerEn from "./components/WriterSubscribeTriggerEn";
 
+
 import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
-import ChatBotEn from "./components/ChatBotEn";
 
+import ChatBotEn from "./components/ChatBotEn";
 
 export const dynamic = "force-dynamic";
 
