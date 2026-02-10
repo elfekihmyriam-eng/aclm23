@@ -35,6 +35,24 @@ export default async function BooksPageEn() {
     );
   }
 
+  /* ===============================
+     Group books by author
+  ================================ */
+  const booksByAuthor: Record<string, any[]> = {};
+
+  books?.forEach((book: any) => {
+    const author = book.authors;
+    const authorName = author
+      ? `${author.first_name} ${author.last_name}`
+      : "Unknown author";
+
+    if (!booksByAuthor[authorName]) {
+      booksByAuthor[authorName] = [];
+    }
+
+    booksByAuthor[authorName].push(book);
+  });
+
   return (
     <main className="content-page" dir="ltr">
       {/* 🔙 BACK BUTTON */}
@@ -58,34 +76,58 @@ export default async function BooksPageEn() {
       {!books || books.length === 0 ? (
         <p>No publications are available at the moment.</p>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-            gap: "20px",
-            marginTop: "24px",
-          }}
-        >
-          {books.map((book) => (
-            <a
-              key={book.id}
-              href={book.cover_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "block" }}
-            >
-              <img
-                src={book.cover_url}
-                alt={book.title}
+        <div style={{ marginTop: "32px" }}>
+          {Object.entries(booksByAuthor).map(([authorName, authorBooks]) => (
+            <section key={authorName} style={{ marginBottom: "56px" }}>
+              {/* Author name */}
+              <h2
                 style={{
-                  width: "100%",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.12)",
-                  transition: "transform 0.2s ease",
+                  fontSize: "20px",
+                  marginBottom: "18px",
+                  color: "#4b3621",
                 }}
-              />
-            </a>
+              >
+                {authorName}
+              </h2>
+
+              {/* Covers side by side */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap", // wrap on small screens
+                  gap: "18px",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                }}
+              >
+                {authorBooks.map((book: any) => (
+                  <a
+                    key={book.id}
+                    href={book.cover_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      width: "160px",
+                      display: "block",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <img
+                      src={book.cover_url}
+                      alt={book.title}
+                      style={{
+                        width: "100%",
+                        borderRadius: "10px",
+                        boxShadow: "0 6px 18px rgba(0,0,0,0.12)",
+                        cursor: "pointer",
+                        display: "block",
+                      }}
+                    />
+                  </a>
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       )}
