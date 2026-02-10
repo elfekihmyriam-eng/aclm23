@@ -5,6 +5,8 @@ import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
 import WriterSubscribeTrigger from "../../components/WriterSubscribeTrigger";
 import FeaturedAuthors from "../../components/FeaturedAuthors";
+import ChatBotAr from "./components/ChatBotAr";
+
 
 export const dynamic = "force-dynamic";
 
@@ -116,9 +118,10 @@ export default function HomePage() {
       </main>
 
       <Footer />
+
+      {/* ===== Chatbot AR ===== */}
+      <ChatBotAr />
     </>
   );
 }
-
-
 
