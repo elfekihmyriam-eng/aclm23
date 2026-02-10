@@ -4,6 +4,8 @@ import WriterSubscribeTriggerEn from "./components/WriterSubscribeTriggerEn";
 
 import Image from "next/image";
 import BooksShowcase from "./BooksShowcase";
+import ChatBotEn from "./components/ChatBotEn";
+
 
 export const dynamic = "force-dynamic";
 
@@ -97,6 +99,8 @@ export default function HomePageEn() {
       </main>
 
       <FooterEn />
+<ChatBotEn />
+
     </>
   );
 }
