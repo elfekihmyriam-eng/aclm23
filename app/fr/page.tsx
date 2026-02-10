@@ -5,8 +5,8 @@ import WriterSubscribeTrigger from "./components/WriterSubscribeTrigger";
 
 import Image from "next/image";
 import BooksShowcase from "../fr/BooksShowcase";
-
 import ChatBotFr from "./components/ChatBotFr";
+
 
 
 
