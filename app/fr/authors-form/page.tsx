@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 
-/* ================== LIMITES ================== */
-const MAX_PHOTO_SIZE = 2 * 1024 * 1024; // 2 Mo
-const MAX_COVER_SIZE = 3 * 1024 * 1024; // 3 Mo
+/* ================== LIMITES (mobile friendly) ================== */
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024; // 5 Mo
+const MAX_COVER_SIZE = 5 * 1024 * 1024; // 5 Mo
 const MAX_COVERS = 10;
 
 /* ================== TYPES ================== */
@@ -17,6 +17,7 @@ type PreviewFile = {
 export default function AuthorsFormPageFr() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [photo, setPhoto] = useState<PreviewFile | null>(null);
   const [covers, setCovers] = useState<PreviewFile[]>([]);
@@ -28,11 +29,12 @@ export default function AuthorsFormPageFr() {
     if (!file) return;
 
     if (file.size > MAX_PHOTO_SIZE) {
-      alert("❌ La photo de l’auteur dépasse la taille maximale autorisée (2 Mo)");
+      setError("La photo de l’auteur·e est trop lourde. Veuillez choisir une image de moins de 5 Mo.");
       e.target.value = "";
       return;
     }
 
+    setError(null);
     setPhoto({
       file,
       preview: URL.createObjectURL(file),
@@ -52,7 +54,7 @@ export default function AuthorsFormPageFr() {
       if (covers.length + accepted.length >= MAX_COVERS) break;
 
       if (file.size > MAX_COVER_SIZE) {
-        alert(`❌ La couverture « ${file.name} » dépasse la taille maximale autorisée (3 Mo)`);
+        setError(`La couverture « ${file.name} » est trop lourde (maximum 5 Mo).`);
         continue;
       }
 
@@ -62,6 +64,7 @@ export default function AuthorsFormPageFr() {
       });
     }
 
+    if (accepted.length > 0) setError(null);
     setCovers((prev) => [...prev, ...accepted]);
     e.target.value = "";
   }
@@ -73,14 +76,15 @@ export default function AuthorsFormPageFr() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
 
     if (!photo) {
-      alert("❌ Veuillez ajouter une photo de l’auteur");
+      setError("Veuillez ajouter une photo de l’auteur·e.");
       return;
     }
 
     if (covers.length === 0) {
-      alert("❌ Veuillez ajouter au moins une couverture de livre");
+      setError("Veuillez ajouter au moins une couverture de livre.");
       return;
     }
 
@@ -96,12 +100,22 @@ export default function AuthorsFormPageFr() {
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Submit failed");
+      if (!res.ok) {
+        if (res.status === 413) {
+          throw new Error("413");
+        }
+        throw new Error("submit");
+      }
 
       setSubmitted(true);
-    } catch (err) {
-      alert("Une erreur est survenue lors de l’envoi du formulaire. Veuillez réessayer.");
-      console.error(err);
+    } catch (err: any) {
+      if (err.message === "413") {
+        setError(
+          "Les fichiers sont trop volumineux pour être envoyés. Veuillez réduire la taille des images et réessayer."
+        );
+      } else {
+        setError("Une erreur est survenue lors de l’envoi du formulaire. Veuillez réessayer.");
+      }
     } finally {
       setLoading(false);
     }
@@ -114,6 +128,23 @@ export default function AuthorsFormPageFr() {
       <Link href="/fr" className="back-link">
         ← Retour à la page d’accueil
       </Link>
+
+      {/* Message d’erreur */}
+      {error && (
+        <div
+          style={{
+            margin: "16px 0",
+            padding: "12px 14px",
+            borderRadius: "10px",
+            background: "#fde8e8",
+            color: "#7a1a1a",
+            fontSize: "14px",
+            lineHeight: 1.6,
+          }}
+        >
+          {error}
+        </div>
+      )}
 
       {!submitted ? (
         <>
@@ -153,9 +184,15 @@ export default function AuthorsFormPageFr() {
                 />
               </div>
 
-              {/* ================= PHOTO ================= */}
+              {/* Indication mobile */}
+              <p style={{ fontSize: "14px", opacity: 0.8, marginBottom: "10px" }}>
+                📱 Les photos prises avec un téléphone sont souvent volumineuses.
+                Veuillez utiliser des images de moins de 5 Mo.
+              </p>
+
+              {/* PHOTO */}
               <div className="upload-box">
-                📷 Photo de l’auteur·e (2 Mo maximum)
+                📷 Photo de l’auteur·e (jusqu’à 5 Mo)
                 <input
                   type="file"
                   name="photo"
@@ -185,9 +222,9 @@ export default function AuthorsFormPageFr() {
                 </div>
               )}
 
-              {/* ================= COVERS ================= */}
+              {/* COVERS */}
               <div className="upload-box">
-                📎 Couvertures de livres (jusqu’à 10 – 3 Mo chacune)
+                📎 Couvertures de livres (jusqu’à 10 – 5 Mo chacune)
                 <input
                   type="file"
                   name="covers"
@@ -208,7 +245,7 @@ export default function AuthorsFormPageFr() {
                   }}
                 >
                   {covers.map((c, i) => (
-                    <div key={i} className="preview-item" style={{ textAlign: "center" }}>
+                    <div key={i} style={{ textAlign: "center" }}>
                       <img
                         src={c.preview}
                         alt={`cover-${i}`}
@@ -233,7 +270,7 @@ export default function AuthorsFormPageFr() {
               {/* Envoi */}
               <div className="authors-submit">
                 <button type="submit" disabled={loading}>
-                  {loading ? "Envoi en cours…" : "Envoyer le formulaire"}
+                  {loading ? "⏳ Envoi en cours… veuillez patienter" : "Envoyer le formulaire"}
                 </button>
               </div>
 

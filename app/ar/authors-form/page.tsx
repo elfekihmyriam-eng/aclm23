@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 
-/* ================== LIMITES ================== */
-const MAX_PHOTO_SIZE = 2 * 1024 * 1024; // 2 Mo
-const MAX_COVER_SIZE = 3 * 1024 * 1024; // 3 Mo
+/* ================== LIMITES (mobile friendly) ================== */
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024; // 5 Mo
+const MAX_COVER_SIZE = 5 * 1024 * 1024; // 5 Mo
 const MAX_COVERS = 10;
 
 /* ================== TYPES ================== */
@@ -17,6 +17,7 @@ type PreviewFile = {
 export default function AuthorsFormPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [photo, setPhoto] = useState<PreviewFile | null>(null);
   const [covers, setCovers] = useState<PreviewFile[]>([]);
@@ -28,11 +29,12 @@ export default function AuthorsFormPage() {
     if (!file) return;
 
     if (file.size > MAX_PHOTO_SIZE) {
-      alert("❌ حجم صورة الكاتب كبير جدًا (الحد الأقصى 2 ميغابايت)");
+      setError("الصورة كبيرة جدًا. يرجى اختيار صورة أقل من 5 ميغابايت.");
       e.target.value = "";
       return;
     }
 
+    setError(null);
     setPhoto({
       file,
       preview: URL.createObjectURL(file),
@@ -52,7 +54,7 @@ export default function AuthorsFormPage() {
       if (covers.length + accepted.length >= MAX_COVERS) break;
 
       if (file.size > MAX_COVER_SIZE) {
-        alert(`❌ الغلاف "${file.name}" حجمه كبير (الحد الأقصى 3 ميغابايت)`);
+        setError(`الغلاف «${file.name}» كبير جدًا (الحد الأقصى 5 ميغابايت).`);
         continue;
       }
 
@@ -62,6 +64,7 @@ export default function AuthorsFormPage() {
       });
     }
 
+    if (accepted.length > 0) setError(null);
     setCovers((prev) => [...prev, ...accepted]);
     e.target.value = "";
   }
@@ -73,14 +76,15 @@ export default function AuthorsFormPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
 
     if (!photo) {
-      alert("❌ يرجى إضافة صورة الكاتب");
+      setError("يرجى إضافة صورة للكاتب.");
       return;
     }
 
     if (covers.length === 0) {
-      alert("❌ يرجى إضافة غلاف واحد على الأقل");
+      setError("يرجى إضافة غلاف واحد على الأقل.");
       return;
     }
 
@@ -96,12 +100,22 @@ export default function AuthorsFormPage() {
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Submit failed");
+      if (!res.ok) {
+        if (res.status === 413) {
+          throw new Error("413");
+        }
+        throw new Error("submit");
+      }
 
       setSubmitted(true);
-    } catch (err) {
-      alert("حدث خطأ أثناء إرسال الاستمارة. يرجى المحاولة مرة أخرى.");
-      console.error(err);
+    } catch (err: any) {
+      if (err.message === "413") {
+        setError(
+          "تعذّر إرسال الاستمارة بسبب حجم الملفات. يرجى تقليل حجم الصور والمحاولة مرة أخرى."
+        );
+      } else {
+        setError("حدث خطأ أثناء إرسال الاستمارة. يرجى المحاولة مرة أخرى.");
+      }
     } finally {
       setLoading(false);
     }
@@ -114,6 +128,23 @@ export default function AuthorsFormPage() {
       <Link href="/ar" className="back-link">
         ← العودة إلى الصفحة الرئيسيّة
       </Link>
+
+      {/* رسالة الخطأ */}
+      {error && (
+        <div
+          style={{
+            margin: "16px 0",
+            padding: "12px 14px",
+            borderRadius: "10px",
+            background: "#fde8e8",
+            color: "#7a1a1a",
+            fontSize: "14px",
+            lineHeight: 1.6,
+          }}
+        >
+          {error}
+        </div>
+      )}
 
       {!submitted ? (
         <>
@@ -144,9 +175,14 @@ export default function AuthorsFormPage() {
                 <textarea name="bio" placeholder="نبذة عنكم" required />
               </div>
 
-              {/* ================= PHOTO ================= */}
+              {/* تنبيه الهاتف */}
+              <p style={{ fontSize: "14px", opacity: 0.8, marginBottom: "10px" }}>
+                📱 ملاحظة: صور الهاتف غالبًا تكون كبيرة. يُفضّل اختيار صور أقل من 5 ميغابايت.
+              </p>
+
+              {/* PHOTO */}
               <div className="upload-box">
-                📷 صورة الكاتب (2MB كحد أقصى)
+                📷 صورة الكاتب (حتى 5MB)
                 <input
                   type="file"
                   name="photo"
@@ -176,9 +212,9 @@ export default function AuthorsFormPage() {
                 </div>
               )}
 
-              {/* ================= COVERS ================= */}
+              {/* COVERS */}
               <div className="upload-box">
-                📎 أغلفة الكتب (حتى 10 – 3MB لكل غلاف)
+                📎 أغلفة الكتب (حتى 10 – 5MB لكل غلاف)
                 <input
                   type="file"
                   name="covers"
@@ -189,17 +225,9 @@ export default function AuthorsFormPage() {
               </div>
 
               {covers.length > 0 && (
-                <div
-                  className="preview-grid"
-                  style={{
-                    display: "flex",
-                    gap: "10px",
-                    flexWrap: "wrap",
-                    marginTop: "10px",
-                  }}
-                >
+                <div className="preview-grid" style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
                   {covers.map((c, i) => (
-                    <div key={i} className="preview-item" style={{ textAlign: "center" }}>
+                    <div key={i} style={{ textAlign: "center" }}>
                       <img
                         src={c.preview}
                         alt={`cover-${i}`}
@@ -224,7 +252,7 @@ export default function AuthorsFormPage() {
               {/* إرسال */}
               <div className="authors-submit">
                 <button type="submit" disabled={loading}>
-                  {loading ? "جارٍ الإرسال..." : "إرسال الاستمارة"}
+                  {loading ? "⏳ جارٍ الإرسال… الرجاء الانتظار" : "إرسال الاستمارة"}
                 </button>
               </div>
 
