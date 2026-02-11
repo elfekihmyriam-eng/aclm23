@@ -1,7 +1,12 @@
+
+
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
-export const dynamic = "force-dynamic";
 
+import AddToCRMButton from "./AddToCRMButton";
+
+
+export const dynamic = "force-dynamic";
 
 /* ===============================
    NAVIGATION ADMIN
@@ -41,6 +46,7 @@ function AdminNav() {
    PAGE ADMIN AUTHORS
 ================================ */
 export default async function AdminAuthorsPage() {
+
   const { data: authors, error } = await supabase
     .from("authors")
     .select(
@@ -48,46 +54,72 @@ export default async function AdminAuthorsPage() {
     )
     .order("created_at", { ascending: false });
 
+  /* ===============================
+     AJOUT AU CRM
+  =============================== */
+  async function addToCRM(email: string) {
+    try {
+      const res = await fetch("/api/admin/crm/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert(data.message || "تمت إضافة البريد إلى CRM");
+      } else {
+        alert(data.error || "خطأ أثناء الإضافة");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("خطأ في الاتصال بالخادم");
+    }
+  }
+
   return (
     <main dir="rtl" className="admin-wrapper">
-      {/* ===== HEADER ===== */}
+      {/* HEADER */}
       <header className="admin-header">
         <h1>طلبات الكتّاب (الإدارة)</h1>
         <p className="admin-subtitle">⭐ كتّابنا من المهجر</p>
       </header>
 
-      {/* ===== MENU ADMIN ===== */}
       <AdminNav />
 
-      {/* ===== ERREUR ===== */}
       {error && (
         <p style={{ color: "red", textAlign: "center" }}>
           خطأ في تحميل الطلبات
         </p>
       )}
 
-      {/* ===== LISTE VIDE ===== */}
       {(!authors || authors.length === 0) && (
         <p className="admin-empty">لا توجد طلبات بعد.</p>
       )}
 
-      {/* ===== LISTE AUTEURS ===== */}
       {authors?.map((a) => (
         <article key={a.id} className="admin-card">
-          {/* INFOS */}
+
           <h2>
             {a.first_name} {a.last_name}
             {a.featured && <span> ⭐</span>}
           </h2>
 
           <p>📧 {a.email}</p>
+<AddToCRMButton email={a.email} />
+
+
+         
+
           <p>📞 {a.phone}</p>
           <p>🌍 {a.country}</p>
           <p>
             <strong>الحالة:</strong> {a.status}
           </p>
 
-          {/* BIO */}
           {a.bio && (
             <>
               <strong>نبذة:</strong>
@@ -95,7 +127,6 @@ export default async function AdminAuthorsPage() {
             </>
           )}
 
-          {/* PHOTO */}
           <div style={{ marginTop: 16 }}>
             <strong>صورة الكاتب:</strong>
             {a.photo_url ? (
@@ -117,7 +148,7 @@ export default async function AdminAuthorsPage() {
             )}
           </div>
 
-          {/* ===== COVERS + BOUTON ISDARAT ===== */}
+          {/* COVERS */}
           <div style={{ marginTop: 16 }}>
             <strong>أغلفة الكتب:</strong>
 
@@ -136,39 +167,6 @@ export default async function AdminAuthorsPage() {
                         border: "1px solid #ddd",
                       }}
                     />
-
-                    <div style={{ marginTop: 6 }}>
-                      <a href={url} target="_blank" download>
-                        ⬇️ تحميل
-                      </a>
-                    </div>
-
-                    {/* ✅ BOUTON نشر في الإصدارات */}
-                    <form
-                      action="/api/admin/books/from-author-cover"
-                      method="POST"
-                      style={{ marginTop: 6 }}
-                    >
-                      <input
-                        type="hidden"
-                        name="cover_url"
-                        value={url}
-                      />
-                      <input
-                        type="hidden"
-                        name="author_id"
-                        value={a.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="title"
-                        value={`كتاب لـ ${a.first_name} ${a.last_name}`}
-                      />
-
-                      <button type="submit">
-                        📘 نشر هذا الغلاف في الإصدارات
-                      </button>
-                    </form>
                   </div>
                 ))}
               </div>
@@ -177,53 +175,11 @@ export default async function AdminAuthorsPage() {
             )}
           </div>
 
-          {/* ===== ACTIONS AUTEUR ===== */}
-          <div
-            style={{
-              marginTop: 24,
-              display: "flex",
-              gap: "10px",
-              flexWrap: "wrap",
-            }}
-          >
-            <form action="/api/admin/authors/action" method="POST">
-              <input type="hidden" name="id" value={a.id} />
-              <input type="hidden" name="action" value="accept" />
-              <button>✅ نشر في كتّاب من المهجر</button>
-            </form>
-
-            <form action="/api/admin/authors/action" method="POST">
-              <input type="hidden" name="id" value={a.id} />
-              <input
-                type="hidden"
-                name="action"
-                value={a.featured ? "unfeature" : "feature"}
-              />
-              <button>
-                {a.featured
-                  ? "⭐ إزالة من الصفحة الرئيسية"
-                  : "⭐ إبراز في الصفحة الرئيسية"}
-              </button>
-            </form>
-
-            <form action="/api/admin/authors/action" method="POST">
-              <input type="hidden" name="id" value={a.id} />
-              <input type="hidden" name="action" value="reject" />
-              <button>❌ رفض</button>
-            </form>
-
-            <form action="/api/admin/authors/action" method="POST">
-              <input type="hidden" name="id" value={a.id} />
-              <input type="hidden" name="action" value="delete" />
-              <button style={{ color: "red" }}>🗑️ حذف</button>
-            </form>
-          </div>
         </article>
       ))}
     </main>
   );
 }
-
 
 
 
